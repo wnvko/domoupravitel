@@ -1,0 +1,17 @@
+<div class="container">
+  <form [formGroup]="credentials" (ngSubmit)="onSubmit()">
+    <igx-input-group type="border">
+      <input igxInput name="username" type="text" formControlName="username">
+      <label igxLabel for="username">Потребителско име</label>
+      <igx-hint>Въведете вашето потребителско име</igx-hint>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input igxInput name="password" type="password" formControlName="password">
+      <label igxLabel for="password">Парола</label>
+      <igx-hint>Въведете вашата парола</igx-hint>
+    </igx-input-group>
+    <div class="actions">
+      <button igxButton="raised" type="submit" igxRipple [disabled]="!credentials.valid">Влез</button>
+    </div>
+  </form>
+</div>

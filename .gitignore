@@ -1,0 +1,18 @@
+# Compiled output
+/frontend/dist
+
+# Node
+/frontend/node_modules
+
+# Visual Studio Code
+/frontend/.vscode/*
+/frontend/!.vscode/settings.json
+/frontend/!.vscode/tasks.json
+/frontend/!.vscode/launch.json
+/frontend/!.vscode/extensions.json
+/frontend/.history/*
+
+# Miscellaneous
+/frontend/.angular/cache
+/frontend/.sass-cache/
+/frontend/package-lock.json
