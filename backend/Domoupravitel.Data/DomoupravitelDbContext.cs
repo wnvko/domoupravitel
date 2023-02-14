@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domoupravitel.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domoupravitel.Data
 {
@@ -11,17 +12,17 @@ namespace Domoupravitel.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(p => p.Id).ValueGeneratedOnAdd();
-                entity.Property(p => p.Name).IsRequired();
-                entity.Property(p => p.Password).IsRequired();
-                entity.HasData(new User { Id = 1, Name = "wnvko", Password = "par01a" });
-            });
+            //modelBuilder.Entity<IdentityUser>(entity =>
+            //{
+            //    entity.HasKey(e => e.Id);
+            //    entity.Property(p => p.Id).ValueGeneratedOnAdd();
+            //    entity.Property(p => p.Name).IsRequired();
+            //    entity.Property(p => p.Password).IsRequired();
+            //    entity.HasData(new User { Id = 1, Name = "wnvko", Password = "par01a" });
+            //});
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<IdentityUser> Users { get; set; }
 
         public new DbSet<T> Set<T>() where T : class
         {
