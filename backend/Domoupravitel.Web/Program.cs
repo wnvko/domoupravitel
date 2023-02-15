@@ -58,6 +58,17 @@ builder.Services.AddScoped<IDomoupravitelDbContext, DomoupravitelDbContext>();
 builder.Services.AddScoped<IDomoupravitelData, DomoupravitelData>();
 builder.Services.AddScoped<TokenService, TokenService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "debug",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost", "http://localhost:4200")
+                  .AllowCredentials()
+                  .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,6 +76,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("debug");
+}
+else
+{
+    app.UseCors();
 }
 
 app.UseHttpsRedirection();
