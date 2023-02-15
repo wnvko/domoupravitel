@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IgxButtonModule, IgxInputGroupModule, IgxRippleModule, IgxToastModule } from "igniteui-angular";
 import { AuthRoutingModule } from "./auth-routing.module";
 import { LoginComponent } from "./login/login.component";
+import { UserManagerComponent } from './user-manager/user-manager.component';
 
 @NgModule({
     declarations: [
-        LoginComponent
+        LoginComponent,
+        UserManagerComponent
     ],
     imports: [
         CommonModule,

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { mergeMap, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { JWT, JwtPayload } from "../models/jwt";
+import { JWT, JwtPayload } from "../models/JWT";
 import { User } from "../models/user";
 
 @Injectable({
@@ -23,15 +23,15 @@ export class UserService {
   }
 
   public isLoggedIn(): boolean {
-    return !!this._id;
+    return !!this._name;
+  }
+
+  public isAdmin(): boolean {
+    return this._name === "wnvko";
   }
 
   public login(username: string, password: string): Observable<JWT> {
-    return this.http.post<JWT>(`${this.serverUrl}/users/login`, { username, password }).pipe(
-      mergeMap(async res => {
-        localStorage.setItem('id_token', res.jwt);
-        return res;
-      }));
+    return this.http.post<JWT>(`${this.serverUrl}/auth/login`, { username, password });
   }
 
   public logout(): void {
@@ -40,11 +40,11 @@ export class UserService {
     this.router.navigate(['/authentication']);
   }
 
-  private get _id(): number | undefined {
+  private get _name(): string | undefined {
     let rawJwt = localStorage.getItem('id_token');
     if (!rawJwt) return undefined;
     const payload = JSON.parse(atob(rawJwt.split('.')[1])) as JwtPayload;
 
-    return payload.id;
+    return payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
   }
 }

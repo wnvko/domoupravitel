@@ -12,11 +12,11 @@ export class AuthInterceptor implements HttpInterceptor {
         });
         return next.handle(cloned).pipe(
             map((v: any) => {
-                if (typeof v !== 'object') return;
-                if (typeof v.body !== 'object') return;
-                if (typeof v.body.jwt !== 'string') return;
+                if (typeof v !== 'object') return v;
+                if (typeof v.body !== 'object') return v;
+                if (typeof v.body.token !== 'string') return v;
 
-                localStorage.setItem('id_token', v.body.jwt + '');
+                localStorage.setItem('id_token', v.body.token + '');
 
                 return v;
             })

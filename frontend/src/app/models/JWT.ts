@@ -1,9 +1,14 @@
 export interface JWT {
-  jwt: string;
+  token: string;
 }
 
 export interface JwtPayload {
-  id: number;
+  aud: string;
   exp: number;
-  iat: number;
+  'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string;
+  'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': string;
+  iat: Date;
+  iss: string;
+  jti: string;
+  sub: string;
 }
