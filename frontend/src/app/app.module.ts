@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IgxInputGroupModule } from 'igniteui-angular';
+import { IgxAvatarModule, IgxDialogModule, IgxInputGroupModule, IgxNavbarModule } from 'igniteui-angular';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
@@ -20,7 +20,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    IgxAvatarModule,
+    IgxDialogModule,
     IgxInputGroupModule,
+    IgxNavbarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

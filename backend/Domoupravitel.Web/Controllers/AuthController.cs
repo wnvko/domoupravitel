@@ -26,29 +26,6 @@ namespace Domoupravitel.Web.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register(RegistrationRequest request)
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var result = await this._userManager
-                .CreateAsync(new IdentityUser { UserName = request.Username }, request.Password);
-
-            if (result.Succeeded)
-            {
-                request.Password = string.Empty;
-                return CreatedAtAction(nameof(Register), new { UserName = request.Username }, request);
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(error.Code, error.Description);
-            }
-
-            return BadRequest(ModelState);
-        }
-
-        [HttpPost]
         [Route("login")]
         public async Task<ActionResult<AuthResponse>> Login([FromBody] RegistrationRequest request)
         {

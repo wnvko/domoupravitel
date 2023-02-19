@@ -1,1 +1,11 @@
-<p>user-manager works!</p>
+<div class="container">
+  <igx-grid [data]="users | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+    (rowAdded)="userAdded($event)">
+    <igx-column field="id"></igx-column>
+    <igx-column field="userName"></igx-column>
+    <igx-column field="password"></igx-column>
+    <igx-action-strip #actionstrip>
+      <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
+    </igx-action-strip>
+  </igx-grid>
+</div>

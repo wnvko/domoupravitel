@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { mergeMap, Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { JWT, JwtPayload } from "../models/JWT";
 import { User } from "../models/user";
@@ -11,15 +11,14 @@ import { User } from "../models/user";
 })
 export class UserService {
   private serverUrl = environment.API_URL;
-  private _currentUser?: User;
 
   constructor(
     private http: HttpClient,
     private router: Router) {
   }
 
-  public get currentUser(): User | undefined {
-    return this._currentUser;
+  public get userName(): string {
+    return this._name ?? '';
   }
 
   public isLoggedIn(): boolean {
@@ -30,14 +29,25 @@ export class UserService {
     return this._name === "wnvko";
   }
 
+  public all(): Observable<User[]> {
+    return this.http
+      .get<User[]>(`${this.serverUrl}/user/all`)
+      .pipe(map(e => e.map(u => {
+        return { id: u.id, userName: u.userName, password: ''} as User;
+      })));
+  }
+
+  public add(user: User): Observable<User> {
+    return this.http.post<User>(`${this.serverUrl}/user/register`, user);
+  }
+
   public login(username: string, password: string): Observable<JWT> {
     return this.http.post<JWT>(`${this.serverUrl}/auth/login`, { username, password });
   }
 
   public logout(): void {
-    delete this._currentUser;
     localStorage.removeItem('id_token');
-    this.router.navigate(['/authentication']);
+    this.router.navigate(['/auth']);
   }
 
   private get _name(): string | undefined {

@@ -9,6 +9,9 @@ import { UserService } from './auth/user.service';
 export class AppComponent {
   title = 'domoupravitel-front-end';
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService) { }
+
+  public settings() {
+
   }
 }
