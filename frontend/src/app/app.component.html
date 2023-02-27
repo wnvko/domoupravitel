@@ -2,17 +2,32 @@
   <igx-navbar>
     <div igxNavbarTitle>
       <img src="/assets/logo.png" alt="" width="50px" height="50px">
-      <span style="margin-left: 1rem;">Атмосфера Спорт</span>
+      <span style="margin-left: 1rem;">Равногор №1</span>
     </div>
-    <button *ngIf="userService.isAdmin()" igxButton [routerLink]="'/auth/user-manager'">Администрация</button>
-    <button *ngIf="userService.isLoggedIn()" igxButton (click)="settings()">Настройки</button>
     <button *ngIf="userService.isLoggedIn()" igxButton (click)="userService.logout()">Изход</button>
-    <button *ngIf="this.userService.isLoggedIn()" igxButton="flat" type="button">
+    <button *ngIf="this.userService.isLoggedIn()" igxButton="flat" type="button" routerLink="/auth/user-settings">
       <igx-avatar [initials]="userService.userName"></igx-avatar>
     </button>
   </igx-navbar>
 </div>
-<router-outlet></router-outlet>
-<igx-dialog>
-
-</igx-dialog>
+<div class="content-wrap">
+  <main class="main">
+    <igx-tabs *ngIf="userService.isLoggedIn()">
+      <igx-tab-item routerLinkActive #rlaAdmin="routerLinkActive" [selected]="rlaAdmin.isActive"
+        *ngIf="this.userService.isAdmin()">
+        <igx-tab-header routerLink="/auth/user-manager">
+          <span igxTabHeaderLabel>Администрация</span>
+        </igx-tab-header>
+      </igx-tab-item>
+      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
+        *ngIf="this.userService.isAdmin()">
+        <igx-tab-header routerLink="/auth/user-settings">
+          <span igxTabHeaderLabel>Настройки на профила</span>
+        </igx-tab-header>
+      </igx-tab-item>
+    </igx-tabs>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

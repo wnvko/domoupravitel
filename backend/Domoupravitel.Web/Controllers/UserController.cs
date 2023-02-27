@@ -56,5 +56,39 @@ namespace Domoupravitel.Web.Controllers
 
             return BadRequest(ModelState);
         }
+
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> Update(UpdateRequest request)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (request.NewPassword != request.RepeatPassword)
+            {
+                return BadRequest("Not matching passwords");
+            }
+
+            var managedUser = await this._userManager.FindByNameAsync(request.Username);
+            if (managedUser == null) return BadRequest("Bad credentials");
+
+            var isPasswordValid = await this._userManager.CheckPasswordAsync(managedUser, request.Password);
+            if (!isPasswordValid) return BadRequest("Bad credentials");
+
+            var result = await this._userManager.ChangePasswordAsync(managedUser, request.Password, request.NewPassword);
+            if (result.Succeeded)
+            {
+                request.Password = string.Empty;
+                request.NewPassword= string.Empty;
+                request.RepeatPassword = string.Empty;
+                return CreatedAtAction(nameof(Register), new { UserName = request.Username }, request);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
     }
 }
