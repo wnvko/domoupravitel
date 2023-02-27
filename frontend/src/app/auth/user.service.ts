@@ -41,6 +41,11 @@ export class UserService {
     return this.http.post<User>(`${this.serverUrl}/user/register`, user);
   }
 
+  public update(password: string, newPassword: string, repeatPassword: string) {
+    var request = { username: this.userName, password, newPassword, repeatPassword }
+    return this.http.put<User>(`${this.serverUrl}/user/update`, request);
+  }
+
   public login(username: string, password: string): Observable<JWT> {
     return this.http.post<JWT>(`${this.serverUrl}/auth/login`, { username, password });
   }
