@@ -25,6 +25,12 @@
           <span igxTabHeaderLabel>Настройки на профила</span>
         </igx-tab-header>
       </igx-tab-item>
+      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
+        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
+        <igx-tab-header routerLink="/moderator/people">
+          <span igxTabHeaderLabel>Хора</span>
+        </igx-tab-header>
+      </igx-tab-item>
     </igx-tabs>
     <div class="content">
       <router-outlet></router-outlet>

@@ -1,0 +1,11 @@
+<div class="container">
+    <igx-grid [data]="people | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+      (rowAdded)="personAdded($event)" (rowEditDone)="personEdited($event)" (rowDeleted)="personDeleted($event)">
+      <igx-column field="name"></igx-column>
+      <igx-column field="phone"></igx-column>
+      <igx-column field="email"></igx-column>
+      <igx-action-strip #actionstrip>
+        <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
+      </igx-action-strip>
+    </igx-grid>
+  </div>

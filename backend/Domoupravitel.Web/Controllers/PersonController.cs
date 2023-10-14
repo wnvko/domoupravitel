@@ -61,7 +61,7 @@ namespace Domoupravitel.Web.Controllers
             var person = this._data.People.SearchFor(p => p.Id == request.Id).FirstOrDefault();
             if (person == null) return BadRequest("Person not found");
 
-            if (string.IsNullOrEmpty(person.Name))
+            if (!string.IsNullOrEmpty(person.Name))
                 person.Name = request.Name;
 
             person.Phone = request.Phone;
