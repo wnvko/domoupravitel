@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
+using Domoupravitel.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Domoupravitel.Web.Services
@@ -11,7 +11,7 @@ namespace Domoupravitel.Web.Services
     {
         private const int ExpirationMinutes = 60;
 
-        public string CreateToken(IdentityUser user)
+        public string CreateToken(User user)
         {
             var expiration = DateTime.Now.AddMinutes(ExpirationMinutes);
             var token = CreateJwtToken(this.CreateClaims(user), this.CreateSigningCredentials(), expiration);
@@ -22,7 +22,7 @@ namespace Domoupravitel.Web.Services
         private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration) =>
             new("domoupravitel", "domoupravitel", claims, expires: expiration, signingCredentials: credentials);
 
-        private List<Claim> CreateClaims(IdentityUser user)
+        private List<Claim> CreateClaims(User user)
         {
             try
             {

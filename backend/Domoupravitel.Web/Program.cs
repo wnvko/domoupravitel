@@ -1,6 +1,7 @@
 using System.Text;
 using Domoupravitel.Data;
 using Domoupravitel.Data.UnitOfWork;
+using Domoupravitel.Models;
 using Domoupravitel.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -35,7 +36,7 @@ builder.Services
     });
 
 builder.Services
-    .AddIdentityCore<IdentityUser>(options =>
+    .AddIdentityCore<User>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
         options.User.RequireUniqueEmail = false;

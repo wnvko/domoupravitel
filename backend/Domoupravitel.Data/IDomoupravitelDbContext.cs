@@ -6,7 +6,7 @@ namespace Domoupravitel.Data
 {
     public interface IDomoupravitelDbContext
     {
-        DbSet<IdentityUser> Users { get; set; }
+        DbSet<User> Users { get; set; }
 
         DbSet<T> Set<T>() where T : class;
 

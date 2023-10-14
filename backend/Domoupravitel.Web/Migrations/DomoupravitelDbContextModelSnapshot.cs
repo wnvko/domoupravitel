@@ -19,9 +19,10 @@ namespace Domoupravitel.Web.Migrations
                 .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Domoupravitel.Models.User", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
@@ -42,6 +43,10 @@ namespace Domoupravitel.Web.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("longtext");
 
@@ -49,6 +54,7 @@ namespace Domoupravitel.Web.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
@@ -64,11 +70,28 @@ namespace Domoupravitel.Web.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "db4741cc-ae56-44f1-9ab3-6e31c6af60ea",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9a96e8db-9716-4e67-89f9-41aef268cd8e",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Name = "wnvko",
+                            PasswordHash = "AQAAAAEAACcQAAAAELK/mu+8DXqnXciJeuvpuQbJbstCtsu3Oy5KjOO41oCxW5wLu2udFkOWdSpow6smCA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "798f4b9c-ff8c-4c45-b549-d81ef9bf5a3c",
+                            TwoFactorEnabled = false,
+                            UserName = "wnvko"
+                        });
                 });
 #pragma warning restore 612, 618
         }

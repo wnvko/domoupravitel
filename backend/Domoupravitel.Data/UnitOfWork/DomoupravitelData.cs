@@ -1,7 +1,5 @@
 ﻿using Domoupravitel.Data.Repositories;
 using Domoupravitel.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domoupravitel.Data.UnitOfWork
 {
@@ -16,7 +14,7 @@ namespace Domoupravitel.Data.UnitOfWork
             this._repositories = new Dictionary<Type, object>();
         }
 
-        public IGenericRepository<IdentityUser> Users => this.GetRepository<IdentityUser>();
+        public IGenericRepository<User> Users => this.GetRepository<User>();
 
         public void SaveChanges()
         {

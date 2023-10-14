@@ -11,12 +11,12 @@ namespace Domoupravitel.Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IDomoupravitelData _data;
         private readonly TokenService _tokenService;
 
         public AuthController(
-            UserManager<IdentityUser> userManager,
+            UserManager<User> userManager,
             IDomoupravitelData data,
             TokenService tokenService)
         {
@@ -31,14 +31,11 @@ namespace Domoupravitel.Web.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var managedUser = await this._userManager.FindByNameAsync(request.Username);
-            if (managedUser == null) return BadRequest("Bad credentials");
+            var user = this._data.Users.SearchFor(u => u.Name == request.Username).FirstOrDefault();
+            if (user == null) return BadRequest("Bad credentials");
 
-            var isPasswordValid = await this._userManager.CheckPasswordAsync(managedUser, request.Password);
+            var isPasswordValid = await this._userManager.CheckPasswordAsync(user, request.Password);
             if (!isPasswordValid) return BadRequest("Bad credentials");
-
-            var user = this._data.Users.All().FirstOrDefault(u => u.UserName == request.Username);
-            if (user == null) return Unauthorized();
 
             var token = this._tokenService.CreateToken(user);
             this._data.SaveChanges();

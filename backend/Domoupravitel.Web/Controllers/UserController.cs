@@ -12,12 +12,12 @@ namespace Domoupravitel.Web.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IDomoupravitelData _data;
         private readonly TokenService _tokenService;
 
         public UserController(
-            UserManager<IdentityUser> userManager,
+            UserManager<User> userManager,
             IDomoupravitelData data,
             TokenService tokenService)
         {
@@ -28,7 +28,7 @@ namespace Domoupravitel.Web.Controllers
 
         [HttpGet]
         [Route("all")]
-        public IEnumerable<IdentityUser>  All()
+        public IEnumerable<User>  All()
         {
             var result = this._data.Users.All();
             return result;
@@ -41,7 +41,7 @@ namespace Domoupravitel.Web.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = await this._userManager
-                .CreateAsync(new IdentityUser { UserName = request.Username }, request.Password);
+                .CreateAsync(new User { Name = request.Username, UserName = request.Username }, request.Password);
 
             if (result.Succeeded)
             {
@@ -68,7 +68,9 @@ namespace Domoupravitel.Web.Controllers
                 return BadRequest("Not matching passwords");
             }
 
-            var managedUser = await this._userManager.FindByNameAsync(request.Username);
+            var managedUser = this._data.Users
+                .SearchFor(u => u.UserName == request.Username)
+                .FirstOrDefault();
             if (managedUser == null) return BadRequest("Bad credentials");
 
             var isPasswordValid = await this._userManager.CheckPasswordAsync(managedUser, request.Password);
