@@ -28,7 +28,7 @@ namespace Domoupravitel.Web.Controllers
 
         [HttpGet]
         [Route("all")]
-        public IEnumerable<User>  All()
+        public IEnumerable<User> All()
         {
             var result = this._data.Users.All();
             return result;
@@ -41,7 +41,7 @@ namespace Domoupravitel.Web.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = await this._userManager
-                .CreateAsync(new User { Name = request.Username, UserName = request.Username }, request.Password);
+                .CreateAsync(new User { Name = request.Username, UserName = request.Username, Role = request.Role!.Value }, request.Password);
 
             if (result.Succeeded)
             {
@@ -58,8 +58,8 @@ namespace Domoupravitel.Web.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> Update(UpdateRequest request)
+        [Route("changePassword")]
+        public async Task<IActionResult> ChangePassword(UpdateRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -71,10 +71,10 @@ namespace Domoupravitel.Web.Controllers
             var managedUser = this._data.Users
                 .SearchFor(u => u.UserName == request.Username)
                 .FirstOrDefault();
-            if (managedUser == null) return BadRequest("Bad credentials");
+            if (managedUser == null) return BadRequest("User not found");
 
             var isPasswordValid = await this._userManager.CheckPasswordAsync(managedUser, request.Password);
-            if (!isPasswordValid) return BadRequest("Bad credentials");
+            if (!isPasswordValid) return BadRequest("Invalid password");
 
             var result = await this._userManager.ChangePasswordAsync(managedUser, request.Password, request.NewPassword);
             if (result.Succeeded)
@@ -82,7 +82,7 @@ namespace Domoupravitel.Web.Controllers
                 request.Password = string.Empty;
                 request.NewPassword= string.Empty;
                 request.RepeatPassword = string.Empty;
-                return CreatedAtAction(nameof(Register), new { UserName = request.Username }, request);
+                return CreatedAtAction(nameof(Update), new { UserName = request.Username }, request);
             }
 
             foreach (var error in result.Errors)
@@ -91,6 +91,24 @@ namespace Domoupravitel.Web.Controllers
             }
 
             return BadRequest(ModelState);
+        }
+
+        [HttpPut]
+        [Route("update")]
+        public IActionResult Update(User request)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var managedUser = this._data.Users
+                .SearchFor(u => u.Id == request.Id)
+                .FirstOrDefault();
+            if (managedUser == null) return BadRequest("User not found");
+            managedUser.UserName = request.UserName;
+            managedUser.Name = request.UserName;
+            managedUser.Role = request.Role;
+            this._data.Users.Update(managedUser);
+            this._data.SaveChanges();
+            return CreatedAtAction(nameof(Update), managedUser, request);
         }
     }
 }

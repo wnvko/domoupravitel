@@ -5,6 +5,7 @@ import { map, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { JWT, JwtPayload } from "../models/JWT";
 import { User } from "../models/user";
+import { Role } from "../models/enums/role";
 
 @Injectable({
   providedIn: 'root'
@@ -26,25 +27,41 @@ export class UserService {
   }
 
   public isAdmin(): boolean {
-    return this._name === "wnvko";
+    const payload = this._jwtPayload;
+    if (!payload) return false;
+
+    return payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']*1 === Role.Admin;
+  }
+
+  public isModerator(): boolean {
+    const payload = this._jwtPayload;
+    if (!payload) return false;
+
+    return payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']*1 === Role.Moderator;
+  }
+
+  public isUser(): boolean {
+    return !this.isAdmin && !this.isModerator;
   }
 
   public all(): Observable<User[]> {
-    return this.http
-      .get<User[]>(`${this.serverUrl}/user/all`)
-      .pipe(map(e => e.map(u => {
-        return { id: u.id, userName: u.userName, password: ''} as User;
-      })));
+    return this.http.get<User[]>(`${this.serverUrl}/user/all`);
   }
 
   public add(user: User): Observable<User> {
     return this.http.post<User>(`${this.serverUrl}/user/register`, user);
   }
 
-  public update(password: string, newPassword: string, repeatPassword: string) {
+  public changePassword(password: string, newPassword: string, repeatPassword: string) {
     var request = { username: this.userName, password, newPassword, repeatPassword }
-    return this.http.put<User>(`${this.serverUrl}/user/update`, request);
+    return this.http.put<User>(`${this.serverUrl}/user/changePassword`, request);
   }
+
+
+  public update(user: User) {
+    return this.http.put<User>(`${this.serverUrl}/user/update`, user);
+  }
+
 
   public login(username: string, password: string): Observable<JWT> {
     return this.http.post<JWT>(`${this.serverUrl}/auth/login`, { username, password });
@@ -56,10 +73,16 @@ export class UserService {
   }
 
   private get _name(): string | undefined {
-    let rawJwt = localStorage.getItem('id_token');
-    if (!rawJwt) return undefined;
-    const payload = JSON.parse(atob(rawJwt.split('.')[1])) as JwtPayload;
+    const payload = this._jwtPayload;
+    if (!payload) return undefined;
 
     return payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+  }
+
+  private get _jwtPayload(): JwtPayload | undefined {
+    let rawJwt = localStorage.getItem('id_token');
+    if (!rawJwt) return undefined;
+
+    return JSON.parse(atob(rawJwt.split('.')[1])) as JwtPayload;
   }
 }

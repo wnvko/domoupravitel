@@ -27,7 +27,7 @@ namespace Domoupravitel.Web.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<AuthResponse>> Login([FromBody] RegistrationRequest request)
+        public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 

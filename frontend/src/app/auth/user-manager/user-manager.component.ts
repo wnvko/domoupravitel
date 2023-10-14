@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IRowDataEventArgs } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs } from 'igniteui-angular';
 import { first, Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserService } from '../user.service';
+import { Role } from 'src/app/models/enums/role';
 
 @Component({
   selector: 'app-user-manager',
@@ -11,6 +12,11 @@ import { UserService } from '../user.service';
 })
 export class UserManagerComponent implements OnInit {
   public users!: Observable<User[]>;
+  public roles = Object.keys(Role).filter(k => !isNaN(Number(k))).map(v => {
+    if (parseInt(v) === Role.Admin) return { name: 'Администратор', value: 0 };
+    if (parseInt(v) === Role.Moderator) return { name: 'Модератор', value: 1 };
+    return { name: 'Потребител', value: 2 };
+  });
 
   constructor(
     private user: UserService
@@ -22,5 +28,13 @@ export class UserManagerComponent implements OnInit {
 
   public userAdded(e: IRowDataEventArgs) {
     this.user.add(e.data as User).pipe(first()).subscribe();
+  }
+
+  public userEdited(e: IGridEditDoneEventArgs) {
+    this.user.update(e.newValue as User).pipe(first()).subscribe();
+  }
+
+  public parseRole(role: number): string {
+    return role === 0 ? 'Администратор' : role === 1 ? 'Модератор' : 'Потребител'
   }
 }

@@ -3,6 +3,7 @@ using System;
 using Domoupravitel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domoupravitel.Web.Migrations
 {
     [DbContext(typeof(DomoupravitelDbContext))]
-    partial class DomoupravitelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231014132234_Person")]
+    partial class Person
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,9 +89,6 @@ namespace Domoupravitel.Web.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -106,16 +106,15 @@ namespace Domoupravitel.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1725d11c-f721-4ad5-a97a-593237e26f6e",
+                            Id = "e3261f54-0bb8-43df-809d-4eb05f7b2296",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35a14008-a2d5-4480-b37f-561342b423eb",
+                            ConcurrencyStamp = "032e82a0-2659-45b5-a45d-5e5fb84b5144",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "wnvko",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHi2FfXhTNNFnnevOrrcvawiUavgqmO8w01saZX5vlZT6qQxr6NRRtfBQMYWohEs1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMFLlOY9/oG9R5mT/BcE0rvq1ZR5pHMMjhEmZnt2f6+IGoTQo4+BrKL1069/IhlM3w==",
                             PhoneNumberConfirmed = false,
-                            Role = 0,
-                            SecurityStamp = "0d7840cc-1ce6-4e11-a369-6ede71cdd1f2",
+                            SecurityStamp = "a2101dd1-f3e7-44e1-b325-57bc33641c02",
                             TwoFactorEnabled = false,
                             UserName = "wnvko"
                         });

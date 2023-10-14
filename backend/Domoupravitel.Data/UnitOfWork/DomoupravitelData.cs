@@ -16,6 +16,8 @@ namespace Domoupravitel.Data.UnitOfWork
 
         public IGenericRepository<User> Users => this.GetRepository<User>();
 
+        public IGenericRepository<Person> People => this.GetRepository<Person>();
+
         public void SaveChanges()
         {
             this._context.SaveChanges();

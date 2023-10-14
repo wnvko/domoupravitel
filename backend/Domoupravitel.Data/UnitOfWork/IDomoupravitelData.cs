@@ -7,6 +7,8 @@ namespace Domoupravitel.Data.UnitOfWork
     {
         IGenericRepository<User> Users { get; }
 
+        IGenericRepository<Person> People { get; }
+
         void SaveChanges();
     }
 }

@@ -24,7 +24,7 @@ export class UserSettingsComponent {
 
   public onSubmit() {
     const result = this.updatePassword.value;
-    this.userService.update(result.password, result.newPassword, result.repeatPassword).subscribe({
+    this.userService.changePassword(result.password, result.newPassword, result.repeatPassword).subscribe({
       next: (e) => {
         this.toast!.textMessage = 'Паролата е успешно обновена!';
         this.toast?.open();

@@ -33,6 +33,7 @@ namespace Domoupravitel.Web.Services
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Role, ((int)user.Role).ToString()),
                 };
                 return claims;
             }
