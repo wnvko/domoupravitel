@@ -28,6 +28,6 @@ namespace Domoupravitel.Models
 
         public DateTime RegisteredOn { get; set; }
 
-        public DateTime UnRegisteredOn { get;}
+        public DateTime UnRegisteredOn { get; set; }
     }
 }

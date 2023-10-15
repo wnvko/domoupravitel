@@ -7,7 +7,7 @@ export interface PersonDescriptor {
     id: string;
     person: Person;
     property: Property;
-    personType: PersonType;
+    type: PersonType;
     residence: Residence;
     monthsInHouse: number;
     registeredOn?: Date;
