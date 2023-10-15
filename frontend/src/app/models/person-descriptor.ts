@@ -5,9 +5,7 @@ import { Property } from "./property";
 
 export interface PersonDescriptor {
     id: string;
-    personId: string;
     person: Person;
-    propertyId: string;
     property: Property;
     personType: PersonType;
     residence: Residence;
