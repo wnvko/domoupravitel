@@ -3,6 +3,7 @@ using System;
 using Domoupravitel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domoupravitel.Web.Migrations
 {
     [DbContext(typeof(DomoupravitelDbContext))]
-    partial class DomoupravitelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015071849_CarToPropertyOptional")]
+    partial class CarToPropertyOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace Domoupravitel.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("PropertyId")
+                    b.Property<Guid>("PropertyId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -213,16 +216,16 @@ namespace Domoupravitel.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3f4f88ad-0c3d-4a6d-8231-88fb05cafc95",
+                            Id = "c449c722-6ea9-4b1d-a881-2c0054874791",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2f15d7a3-c42e-4899-95d7-415f1de76579",
+                            ConcurrencyStamp = "dba36249-c95f-475d-847b-ec3320757a77",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "wnvko",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHox7dl4wazsYIio/CwWKNi44b1HVEBBBaOuel5OYv9hZmViCumRDVr+5Z5hIEnl3g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJHhTR/vQMXwq0ZQBLk3IorZoojIG7l5QSDkoUeZnLXKmw+VAxwYJor89WeX+UZ4UQ==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "be5779a2-1b68-4e85-9f21-2590efe76a37",
+                            SecurityStamp = "ed79faed-ddbb-4e99-9e95-30af0b8c1201",
                             TwoFactorEnabled = false,
                             UserName = "wnvko"
                         });
@@ -260,7 +263,9 @@ namespace Domoupravitel.Web.Migrations
                 {
                     b.HasOne("Domoupravitel.Models.Property", "Property")
                         .WithMany("Pets")
-                        .HasForeignKey("PropertyId");
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Property");
                 });

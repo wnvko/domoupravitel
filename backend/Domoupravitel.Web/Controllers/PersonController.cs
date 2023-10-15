@@ -1,6 +1,5 @@
 ﻿using Domoupravitel.Data.UnitOfWork;
 using Domoupravitel.Models;
-using Domoupravitel.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,14 +11,10 @@ namespace Domoupravitel.Web.Controllers
     public class PersonController : Controller
     {
         private readonly IDomoupravitelData _data;
-        private readonly TokenService _tokenService;
 
-        public PersonController(
-            IDomoupravitelData data,
-            TokenService tokenService)
+        public PersonController(IDomoupravitelData data)
         {
             this._data = data;
-            this._tokenService = tokenService;
         }
 
         [HttpGet]
@@ -81,6 +76,7 @@ namespace Domoupravitel.Web.Controllers
 
             var person = this._data.People.SearchFor(p => p.Id == request.Id).FirstOrDefault();
             if (person == null) return BadRequest("Person not found");
+
             this._data.People.Delete(person);
             this._data.SaveChanges();
             return CreatedAtAction(nameof(Delete), person.Id);

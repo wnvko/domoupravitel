@@ -12,7 +12,7 @@ namespace Domoupravitel.Models
 
         public string Name { get; set; }
 
-        public Guid PropertyId { get; set; }
+        public Guid? PropertyId { get; set; }
 
         public virtual Property Property { get; set; }
     }

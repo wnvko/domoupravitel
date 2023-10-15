@@ -14,7 +14,7 @@ namespace Domoupravitel.Models
 
         public string Color { get; set; }
 
-        public Guid PropertyId { get; set; }
+        public Guid? PropertyId { get; set; }
 
         public virtual Property Property { get; set; }
     }
