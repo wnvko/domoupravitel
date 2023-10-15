@@ -34,5 +34,4 @@ export class PetComponent {
   public petDeleted(e: IRowDataEventArgs) {
     this.petsService.delete(e.data as Pet).pipe(first()).subscribe();
   }
-
 }
