@@ -34,5 +34,4 @@ export class CarComponent {
   public carDeleted(e: IRowDataEventArgs) {
     this.carsService.delete(e.data as Car).pipe(first()).subscribe();
   }
-
 }

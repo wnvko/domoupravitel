@@ -70,7 +70,6 @@ namespace Domoupravitel.Web.Controllers
             return CreatedAtAction(nameof(Update), car);
         }
 
-
         [HttpDelete]
         [Route("delete")]
         public IActionResult Delete(Car request)

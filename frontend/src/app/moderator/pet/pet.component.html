@@ -1,0 +1,10 @@
+<div class="container">
+    <igx-grid [data]="pets | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+      (rowAdded)="petAdded($event)" (rowEditDone)="petEdited($event)" (rowDeleted)="petDeleted($event)">
+      <igx-column field="number"></igx-column>
+      <igx-column field="name"></igx-column>
+      <igx-action-strip #actionstrip>
+        <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
+      </igx-action-strip>
+    </igx-grid>
+  </div>
