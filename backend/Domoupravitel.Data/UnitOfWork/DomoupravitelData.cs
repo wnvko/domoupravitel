@@ -18,6 +18,14 @@ namespace Domoupravitel.Data.UnitOfWork
 
         public IGenericRepository<Person> People => this.GetRepository<Person>();
 
+        public IGenericRepository<Car> Cars => this.GetRepository<Car>();
+
+        public IGenericRepository<Pet> Pets => this.GetRepository<Pet>();
+
+        public IGenericRepository<Property> Properties => this.GetRepository<Property>();
+
+        public IGenericRepository<PersonDescriptor> Descriptors => this.GetRepository<PersonDescriptor>();
+
         public void SaveChanges()
         {
             this._context.SaveChanges();

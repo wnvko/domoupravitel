@@ -9,6 +9,14 @@ namespace Domoupravitel.Data.UnitOfWork
 
         IGenericRepository<Person> People { get; }
 
+        IGenericRepository<Car> Cars { get; }
+
+        IGenericRepository<Pet> Pets { get; }
+
+        IGenericRepository<Property> Properties { get; }
+
+        IGenericRepository<PersonDescriptor> Descriptors { get; }
+
         void SaveChanges();
     }
 }

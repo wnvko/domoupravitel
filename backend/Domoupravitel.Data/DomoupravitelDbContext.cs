@@ -36,6 +36,14 @@ namespace Domoupravitel.Data
 
         public DbSet<Person> People { get; set; }
 
+        public DbSet<Car> Cars { get; set; }
+
+        public DbSet<Pet> Pets { get; set; }
+
+        public DbSet<Property> Properties { get; set; }
+
+        public DbSet<PersonDescriptor> Descriptors { get; set; }
+
         public new DbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

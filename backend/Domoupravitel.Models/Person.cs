@@ -13,5 +13,7 @@ namespace Domoupravitel.Models
         public string Phone { get; set; }
 
         public string Email { get; set; }
+
+        public PersonDescriptor Descriptor { get; set; }
     }
 }

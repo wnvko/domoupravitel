@@ -3,6 +3,7 @@ using System;
 using Domoupravitel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domoupravitel.Web.Migrations
 {
     [DbContext(typeof(DomoupravitelDbContext))]
-    partial class DomoupravitelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015061614_Properties")]
+    partial class Properties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace Domoupravitel.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("PropertyId")
+                    b.Property<Guid?>("PropertyId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -118,7 +121,7 @@ namespace Domoupravitel.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("PropertyId")
+                    b.Property<Guid?>("PropertyId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -213,16 +216,16 @@ namespace Domoupravitel.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8d34ec4f-7b9e-4854-8a52-2c7f7f692b65",
+                            Id = "bfac8019-44df-4c36-8091-2a3006c52305",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "68112ff1-a88b-4450-819f-37287de08596",
+                            ConcurrencyStamp = "11a40354-ec1a-4d43-9cad-12b91b626a78",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "wnvko",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKIE3KnTwzO+h6X1HQ0uJG1xOpdy8AxN6u2jijOSet/X1KbgY/6X8VCLSe5ZEV6APw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEseB4gYS0rcYsj/0Gwu6JkVALCIVMxLlL2A1mUjgl5BwDir7Pws7GX3L5y9s4HrKQ==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "024ec095-25eb-4938-ba93-26a26bc3c1dd",
+                            SecurityStamp = "692dda41-5752-44fa-9f51-47b1e6beb49f",
                             TwoFactorEnabled = false,
                             UserName = "wnvko"
                         });
@@ -230,13 +233,9 @@ namespace Domoupravitel.Web.Migrations
 
             modelBuilder.Entity("Domoupravitel.Models.Car", b =>
                 {
-                    b.HasOne("Domoupravitel.Models.Property", "Property")
+                    b.HasOne("Domoupravitel.Models.Property", null)
                         .WithMany("Cars")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
+                        .HasForeignKey("PropertyId");
                 });
 
             modelBuilder.Entity("Domoupravitel.Models.PersonDescriptor", b =>
@@ -260,13 +259,9 @@ namespace Domoupravitel.Web.Migrations
 
             modelBuilder.Entity("Domoupravitel.Models.Pet", b =>
                 {
-                    b.HasOne("Domoupravitel.Models.Property", "Property")
+                    b.HasOne("Domoupravitel.Models.Property", null)
                         .WithMany("Pets")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
+                        .HasForeignKey("PropertyId");
                 });
 
             modelBuilder.Entity("Domoupravitel.Models.Person", b =>

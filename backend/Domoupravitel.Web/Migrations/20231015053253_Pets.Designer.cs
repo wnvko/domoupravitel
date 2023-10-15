@@ -3,6 +3,7 @@ using System;
 using Domoupravitel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domoupravitel.Web.Migrations
 {
     [DbContext(typeof(DomoupravitelDbContext))]
-    partial class DomoupravitelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015053253_Pets")]
+    partial class Pets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,12 +40,7 @@ namespace Domoupravitel.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("PropertyId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
 
                     b.ToTable("Cars");
                 });
@@ -70,40 +68,6 @@ namespace Domoupravitel.Web.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("Domoupravitel.Models.PersonDescriptor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("MonthsInHouse")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("PropertyId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("RegisteredOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Residence")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("Descriptors");
-                });
-
             modelBuilder.Entity("Domoupravitel.Models.Pet", b =>
                 {
                     b.Property<Guid>("Id")
@@ -118,35 +82,9 @@ namespace Domoupravitel.Web.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("PropertyId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
 
                     b.ToTable("Pets");
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.Property", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<double>("Share")
-                        .HasColumnType("double");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("Domoupravitel.Models.User", b =>
@@ -213,75 +151,19 @@ namespace Domoupravitel.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8d34ec4f-7b9e-4854-8a52-2c7f7f692b65",
+                            Id = "5bff0612-b55a-4416-9739-40603442980d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "68112ff1-a88b-4450-819f-37287de08596",
+                            ConcurrencyStamp = "0f074e9e-9afc-411a-a9b2-770d0b2543c9",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "wnvko",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKIE3KnTwzO+h6X1HQ0uJG1xOpdy8AxN6u2jijOSet/X1KbgY/6X8VCLSe5ZEV6APw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENwCNCTHf0WdMVd51f0Wq7kWt9E8l3RF0SpQWSFZVSJAGGtWDgta6DQNw4K93265UQ==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "024ec095-25eb-4938-ba93-26a26bc3c1dd",
+                            SecurityStamp = "9e355361-fd11-4716-aba3-965a9d200781",
                             TwoFactorEnabled = false,
                             UserName = "wnvko"
                         });
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.Car", b =>
-                {
-                    b.HasOne("Domoupravitel.Models.Property", "Property")
-                        .WithMany("Cars")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.PersonDescriptor", b =>
-                {
-                    b.HasOne("Domoupravitel.Models.Person", "Person")
-                        .WithOne("Descriptor")
-                        .HasForeignKey("Domoupravitel.Models.PersonDescriptor", "PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domoupravitel.Models.Property", "Property")
-                        .WithMany("People")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.Pet", b =>
-                {
-                    b.HasOne("Domoupravitel.Models.Property", "Property")
-                        .WithMany("Pets")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.Person", b =>
-                {
-                    b.Navigation("Descriptor")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domoupravitel.Models.Property", b =>
-                {
-                    b.Navigation("Cars");
-
-                    b.Navigation("People");
-
-                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }
