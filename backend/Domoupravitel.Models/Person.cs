@@ -4,6 +4,8 @@ namespace Domoupravitel.Models
 {
     public class Person
     {
+        private ICollection<PersonDescriptor> descriptors = new HashSet<PersonDescriptor>();
+
         [Required]
         public Guid Id { get; set; }
 
@@ -14,6 +16,11 @@ namespace Domoupravitel.Models
 
         public string Email { get; set; }
 
-        public PersonDescriptor Descriptor { get; set; }
+
+        public virtual ICollection<PersonDescriptor> Descriptors
+        {
+            get { return this.descriptors; }
+            set { this.descriptors = value; }
+        }
     }
 }

@@ -5,5 +5,5 @@ export interface Person {
     name: string;
     phone: string;
     email: string;
-    descriptor: PersonDescriptor;
+    descriptors: PersonDescriptor[];
 }

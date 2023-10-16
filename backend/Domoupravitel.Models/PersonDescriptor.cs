@@ -26,8 +26,8 @@ namespace Domoupravitel.Models
 
         public int MonthsInHouse { get; set; } = 12;
 
-        public DateTime RegisteredOn { get; set; }
+        public DateTime? RegisteredOn { get; set; }
 
-        public DateTime UnRegisteredOn { get; set; }
+        public DateTime? UnRegisteredOn { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISelectionEventArgs, IgxRowIslandComponent } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, IgxRowIslandComponent } from 'igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';
@@ -27,7 +27,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
   @ViewChild('carRowIsland', { static: true, read: IgxRowIslandComponent })
   private carRowIsland!: IgxRowIslandComponent;
-  
+
   @ViewChild('petRowIsland', { static: true, read: IgxRowIslandComponent })
   private petRowIsland!: IgxRowIslandComponent;
 
@@ -87,6 +87,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
   }
   //#endregion  System overloads
 
+  //#region CRUD
   public propertyAdded = (e: IRowDataEventArgs): void => {
     this.propertiesService.create(e.data as Property).pipe(first()).subscribe();
   }
@@ -152,6 +153,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
   public petDeleted = (e: IRowDataEventArgs): void => {
     this.propertiesService.deletePet(e.data).pipe(first()).subscribe();
   }
+  //#endregion
 
   //#region Parsers
   public parseType = (type: number): string => {

@@ -3,6 +3,7 @@ using System;
 using Domoupravitel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domoupravitel.Web.Migrations
 {
     [DbContext(typeof(DomoupravitelDbContext))]
-    partial class DomoupravitelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015145355_PersonDescriptorOneToManyToPerson")]
+    partial class PersonDescriptorOneToManyToPerson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +88,7 @@ namespace Domoupravitel.Web.Migrations
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime?>("RegisteredOn")
+                    b.Property<DateTime>("RegisteredOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Residence")
@@ -94,7 +97,7 @@ namespace Domoupravitel.Web.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UnRegisteredOn")
+                    b.Property<DateTime>("UnRegisteredOn")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -215,16 +218,16 @@ namespace Domoupravitel.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "78874899-de65-4c3f-b238-52e32ccbebbb",
+                            Id = "54d99be3-4d50-4683-b0e2-e0b05a0442d9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb8fc34d-3319-42cc-8da0-08a78a69166f",
+                            ConcurrencyStamp = "518f30d7-b99e-456f-8e35-ce1329fcc449",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "wnvko",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKDhSvnXWjAZTIS6tCB28J6CS21S1n/DpFUGWn2r5n2dQnVmGbZX+I6eIVH7lzISlQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEd1cw/Obf8SAju+mdr3La1pOJdHT9n+MPn2fumjFFlP+5tm4QrPHhR+qNbC1qiwqA==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "16a4ecf7-c503-4a76-834a-2b3dac5a1fba",
+                            SecurityStamp = "79834631-4915-4b55-97d7-6d58bed321a9",
                             TwoFactorEnabled = false,
                             UserName = "wnvko"
                         });

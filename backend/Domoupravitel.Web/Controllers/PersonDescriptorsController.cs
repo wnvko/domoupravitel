@@ -31,7 +31,7 @@ namespace Domoupravitel.Web.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var existing = this._data.Descriptors.SearchFor(d => d.PersonId == request.PersonId).FirstOrDefault();
+            var existing = this._data.Descriptors.SearchFor(d => d.PersonId == request.PersonId && d.PropertyId == request.PropertyId).FirstOrDefault();
             if (existing != null) return BadRequest("PersonDescriptor already exists");
 
             var descriptor = new PersonDescriptor
@@ -61,9 +61,10 @@ namespace Domoupravitel.Web.Controllers
             if (descriptor == null) return BadRequest("PersonDescriptor not found");
 
             if (request.PersonId == Guid.Empty) return BadRequest("Person Id not provided");
+            if (request.PropertyId == Guid.Empty) return BadRequest("Property Id not provided");
 
-            if (this._data.Descriptors.All().Any(d => d.PersonId == request.PersonId && d != descriptor))
-                return BadRequest("Property with this number already exists");
+            if (this._data.Descriptors.All().Any(d => d.PersonId == request.PersonId && d.PropertyId == request.PropertyId && d != descriptor))
+                return BadRequest("PersonDescriptor already exists");
 
             descriptor.PersonId = request.PersonId;
             descriptor.PropertyId = request.PropertyId;

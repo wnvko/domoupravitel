@@ -2,7 +2,7 @@
     <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="600px" [rowEditable]="true"
         [primaryKey]="'id'" (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)"
         (rowDeleted)="propertyDeleted($event)">
-        <igx-column field="type">
+        <igx-column field="type" [sortable]="true">
             <ng-template igxCell let-cell="cell">
                 {{ parseType(cell.value) }}
             </ng-template>
@@ -15,8 +15,8 @@
                 </igx-select>
             </ng-template>
         </igx-column>
-        <igx-column field="number"></igx-column>
-        <igx-column field="share" dataType="number"></igx-column>
+        <igx-column field="number" [sortable]="true"></igx-column>
+        <igx-column field="share" dataType="number" [sortable]="true"></igx-column>
 
         <igx-action-strip>
             <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
