@@ -1,0 +1,31 @@
+<div class="container">
+  <igx-card>
+    <igx-card-header>
+      <h5 igxCardHeaderTitle>{{ userService.userName }}</h5>
+    </igx-card-header>
+    <form [formGroup]="updatePassword" (ngSubmit)="onSubmit()">
+      <igx-card-content>
+        <div class="inputs">
+          <igx-input-group type="border">
+            <input igxInput name="password" type="password" formControlName="password">
+            <label igxLabel for="password">Стара парола</label>
+          </igx-input-group>
+          <igx-input-group type="border">
+            <input igxInput name="newPassword" type="password" formControlName="newPassword">
+            <label igxLabel for="newPassword">Нова парола</label>
+          </igx-input-group>
+          <igx-input-group type="border">
+            <input igxInput name="repeatPassword" type="password" formControlName="repeatPassword">
+            <label igxLabel for="repeatPassword">Отново новата парола</label>
+            <igx-hint *ngIf="!this.updatePassword.valid">Въведете същата парола</igx-hint>
+          </igx-input-group>
+        </div>
+      </igx-card-content>
+      <igx-card-actions [reverse]="true">
+        <button type="button" igxButton="flat" igxRipple [igxRippleCentered]="true" (click)="clearForm()">Изчисти</button>
+        <button igxButton="raised" igxRipple [igxRippleCentered]="true" [disabled]="!updatePassword.valid">Потвърди</button>
+      </igx-card-actions>
+    </form>
+  </igx-card>
+  <igx-toast #toast></igx-toast>
+</div>

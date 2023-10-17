@@ -5,11 +5,9 @@ using Domoupravitel.Data.UnitOfWork;
 using Domoupravitel.Models;
 using Domoupravitel.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,10 +67,19 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "debug",
         policy =>
         {
-            policy.WithOrigins("http://localhost", "http://localhost:4200")
+            policy.WithOrigins("http://localhost", "http://localhost:4200", "http://127.0.0.1", "http://127.0.0.1:4200", "127.0.0.1", "127.0.0.1:4200")
                   .AllowCredentials()
                   .AllowAnyMethod()
                   .AllowAnyHeader();
+        });
+    options.AddPolicy(name: "prod",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://127.0.0.1", "http://127.0.0.1:4200", "127.0.0.1", "127.0.0.1:4200")
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 
@@ -114,7 +121,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseCors();
+    app.UseCors("prod");
 }
 
 app.UseHttpsRedirection();
