@@ -4,9 +4,9 @@
       <img src="../domoupravitel-front/assets/logo.png" alt="" width="50px" height="50px">
       <span style="margin-left: 1rem;">Равногор №1</span>
     </div>
-    <button *ngIf="userService.isLoggedIn()" igxButton (click)="userService.logout()">Изход</button>
+    <button *ngIf="userService.isLoggedIn()" igxButton="raised" (click)="userService.logout()">Изход</button>
     <button *ngIf="this.userService.isLoggedIn()" igxButton="flat" type="button" routerLink="/auth/user-settings">
-      <igx-avatar [initials]="userService.userName"></igx-avatar>
+      <igx-avatar icon="person"></igx-avatar>
     </button>
   </igx-navbar>
 </div>

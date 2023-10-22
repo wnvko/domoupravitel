@@ -9,12 +9,9 @@ import { IgxResourceStringsBG } from 'igniteui-angular-i18n';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'domoupravitel-front-end';
-
   constructor(public userService: UserService) { }
+
   ngOnInit(): void {
     changei18n(IgxResourceStringsBG);
   }
-
-  public settings() {}
 }

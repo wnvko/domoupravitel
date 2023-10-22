@@ -2,12 +2,12 @@
 @use "@infragistics/igniteui-angular/theming" as *;
 
 $primary: #048796 !default;
-$secondary: #048796 !default;
+$secondary: #64a0a7 !default;
 $surface: #fff !default;
 $app-palette: palette($primary, $secondary, $surface);
 
 @include core();
-@include typography($font-family: $fluent-typeface, $type-scale: $fluent-type-scale);
+@include typography($font-family: $fluent-typeface, $type-scale: $indigo-type-scale);
 @include theme($app-palette);
 
 // CSS Reset, comment out if not required or using a different module
