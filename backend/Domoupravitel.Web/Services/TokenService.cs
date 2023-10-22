@@ -9,7 +9,7 @@ namespace Domoupravitel.Web.Services
 {
     public class TokenService
     {
-        private const int ExpirationMinutes = 60;
+        private const int ExpirationMinutes = 60 * 24;
 
         public string CreateToken(User user)
         {
