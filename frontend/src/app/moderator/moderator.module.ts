@@ -6,6 +6,7 @@ import { IgxActionStripModule, IgxGridModule, IgxHierarchicalGridModule } from '
 import { CarComponent } from './car/car.component';
 import { PetComponent } from './pet/pet.component';
 import { PropertyComponent } from './property/property.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 
 
@@ -14,7 +15,8 @@ import { PropertyComponent } from './property/property.component';
     PeopleComponent,
     CarComponent,
     PetComponent,
-    PropertyComponent
+    PropertyComponent,
+    SortPipe
   ],
   imports: [
     CommonModule,

@@ -37,8 +37,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
   public pets!: Observable<Pet[]>;
   public types = Object.keys(PropertyType).filter(k => !isNaN(Number(k))).map(v => {
     if (parseInt(v) === PropertyType.Apartment) return { name: 'Апартамент', value: 0 };
-    if (parseInt(v) === PropertyType.InsideOffice) return { name: 'Офис вътрешен', value: 1 };
-    if (parseInt(v) === PropertyType.OutsideOffice) return { name: 'Офис външен', value: 2 };
+    if (parseInt(v) === PropertyType.OutsideOffice) return { name: 'Офис външен', value: 1 };
+    if (parseInt(v) === PropertyType.InsideOffice) return { name: 'Офис вътрешен', value: 2 };
     return { name: 'Гараж', value: 3 };
   });
   public personTypes = Object.keys(PersonType).filter(k => !isNaN(Number(k))).map(v => {

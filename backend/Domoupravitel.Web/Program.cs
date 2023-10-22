@@ -76,7 +76,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("http://127.0.0.1", "http://127.0.0.1:4200", "127.0.0.1", "127.0.0.1:4200")
+                .WithOrigins("http://192.168.0.106", "https://192.168.0.106", "192.168.0.106")
                 .AllowCredentials()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
@@ -121,6 +121,8 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseCors("prod");
 }
 
