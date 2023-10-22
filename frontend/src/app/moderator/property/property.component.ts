@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IGridEditDoneEventArgs, IRowDataEventArgs, IgxRowIslandComponent } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';

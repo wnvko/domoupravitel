@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { CarService } from '../car.service';
 import { Car } from 'src/app/models/car';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-car',

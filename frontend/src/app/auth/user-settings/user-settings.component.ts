@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { IgxToastComponent } from 'igniteui-angular';
+import { IgxToastComponent } from '@infragistics/igniteui-angular';
 import { UserService } from '../user.service';
 
 @Component({

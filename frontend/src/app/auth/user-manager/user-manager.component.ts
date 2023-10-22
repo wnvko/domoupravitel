@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
 import { first, Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserService } from '../user.service';

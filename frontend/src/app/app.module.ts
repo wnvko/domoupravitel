@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IgxAvatarModule, IgxCardModule, IgxDialogModule, IgxInputGroupModule, IgxNavbarModule, IgxTabsModule } from 'igniteui-angular';
+import { IgxAvatarModule, IgxCardModule, IgxDialogModule, IgxInputGroupModule, IgxNavbarModule, IgxTabsModule } from '@infragistics/igniteui-angular';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 

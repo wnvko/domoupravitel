@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Person } from 'src/app/models/person';
 import { PeopleService } from '../people.service';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from 'igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-people',

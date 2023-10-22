@@ -1,11 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { map, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Role } from "../models/enums/role";
 import { JWT, JwtPayload } from "../models/JWT";
 import { User } from "../models/user";
-import { Role } from "../models/enums/role";
 
 @Injectable({
   providedIn: 'root'
