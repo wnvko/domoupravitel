@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Person } from 'src/app/models/person';
 import { PeopleService } from '../people.service';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-people',
@@ -11,6 +11,9 @@ import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteu
 })
 export class PeopleComponent implements OnInit {
   public people!: Observable<Person[]>;
+  public sortingOptions: ISortingOptions = {
+    mode: 'single'
+  }
 
   constructor(
     private peopleService: PeopleService

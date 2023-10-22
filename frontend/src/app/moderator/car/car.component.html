@@ -1,11 +1,12 @@
 <div class="container">
-    <igx-grid [data]="cars | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
-      (rowAdded)="carAdded($event)" (rowEditDone)="carEdited($event)" (rowDeleted)="carDeleted($event)">
-      <igx-column field="number"></igx-column>
-      <igx-column field="brand"></igx-column>
-      <igx-column field="color"></igx-column>
-      <igx-action-strip #actionstrip>
-        <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-      </igx-action-strip>
-    </igx-grid>
-  </div>
+  <igx-grid [data]="cars | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+    (rowAdded)="carAdded($event)" (rowEditDone)="carEdited($event)" (rowDeleted)="carDeleted($event)"
+    [sortingOptions]="sortingOptions">
+    <igx-column field="number" header="Регистрационен №" [sortable]="true"></igx-column>
+    <igx-column field="brand" header="Марка" [sortable]="true"></igx-column>
+    <igx-column field="color" header="Цвят" [sortable]="true"></igx-column>
+    <igx-action-strip #actionstrip>
+      <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
+    </igx-action-strip>
+  </igx-grid>
+</div>

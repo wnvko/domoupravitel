@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IGridEditDoneEventArgs, IRowDataEventArgs, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';
@@ -51,6 +51,9 @@ export class PropertyComponent implements OnInit, OnDestroy {
     if (parseInt(v) === Residence.Absent) return { name: 'Отсъства', value: 1 };
     return { name: 'Временно', value: 2 };
   });
+  public sortingOptions: ISortingOptions = {
+    mode: 'single'
+  }
 
   constructor(
     private propertiesService: PropertyService,

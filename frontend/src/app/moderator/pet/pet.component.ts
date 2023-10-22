@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Pet } from 'src/app/models/pet';
 import { PetService } from '../pet.service';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-pet',
@@ -11,6 +11,9 @@ import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteu
 })
 export class PetComponent {
   public pets!: Observable<Pet[]>;
+  public sortingOptions: ISortingOptions = {
+    mode: 'single'
+  }
 
   constructor(
     private petsService: PetService

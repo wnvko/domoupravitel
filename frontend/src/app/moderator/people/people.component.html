@@ -1,11 +1,12 @@
 <div class="container">
-    <igx-grid [data]="people | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
-      (rowAdded)="personAdded($event)" (rowEditDone)="personEdited($event)" (rowDeleted)="personDeleted($event)">
-      <igx-column field="name"></igx-column>
-      <igx-column field="phone"></igx-column>
-      <igx-column field="email"></igx-column>
-      <igx-action-strip #actionstrip>
-        <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-      </igx-action-strip>
-    </igx-grid>
-  </div>
+  <igx-grid [data]="people | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+    (rowAdded)="personAdded($event)" (rowEditDone)="personEdited($event)" (rowDeleted)="personDeleted($event)"
+    [sortingOptions]="sortingOptions">
+    <igx-column field="name" header="Име" [sortable]="true"></igx-column>
+    <igx-column field="phone" header="Телефон" [sortable]="true"></igx-column>
+    <igx-column field="email" header="e-mail" [sortable]="true"></igx-column>
+    <igx-action-strip #actionstrip>
+      <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
+    </igx-action-strip>
+  </igx-grid>
+</div>

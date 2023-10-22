@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { CarService } from '../car.service';
 import { Car } from 'src/app/models/car';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
+import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-car',
@@ -11,6 +11,9 @@ import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteu
 })
 export class CarComponent {
   public cars!: Observable<Car[]>;
+  public sortingOptions: ISortingOptions = {
+    mode: 'single'
+  }
 
   constructor(
     private carsService: CarService
