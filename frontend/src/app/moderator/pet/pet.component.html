@@ -1,7 +1,18 @@
 <div class="container">
-  <igx-grid [data]="pets | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
-    (rowAdded)="petAdded($event)" (rowEditDone)="petEdited($event)" (rowDeleted)="petDeleted($event)"
-    [sortingOptions]="sortingOptions">
+  <igx-grid #grid [data]="pets | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+    (rowAdded)="petAdded($event)" (rowEditDone)="petEdited($event)" [sortingOptions]="sortingOptions">
+    <igx-grid-toolbar>
+      <igx-grid-toolbar-actions>
+        <button igxButton (click)="addPet(grid)">Добави човек</button>
+      </igx-grid-toolbar-actions>
+    </igx-grid-toolbar>
+    <igx-column width="60px" [editable]="false">
+      <ng-template igxCell let-cell="cell">
+        <button igxButton="icon" (click)="petDeleted(cell)">
+          <igx-icon>delete</igx-icon>
+        </button>
+      </ng-template>
+    </igx-column>
     <igx-column field="number" header="Номер" [sortable]="true"></igx-column>
     <igx-column field="name" header="Име" [sortable]="true"></igx-column>
     <igx-action-strip #actionstrip>

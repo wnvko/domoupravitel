@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Pet } from 'src/app/models/pet';
 import { PetService } from '../pet.service';
-import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions } from '@infragistics/igniteui-angular';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxGridComponent } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-pet',
@@ -22,19 +22,26 @@ export class PetComponent {
   ngOnInit(): void {
     this.pets = this.petsService.all();
   }
+  
+  public addPet = (grid: IgxGridComponent): void => {
+    grid.beginAddRowByIndex(0);
+  }
 
-  public petAdded(e: IRowDataEventArgs) {
+  public petAdded = (e: IRowDataEventArgs): void => {
     this.petsService.create(e.data as Pet).pipe(first()).subscribe();
   }
 
-  public petEdited(e: IGridEditDoneEventArgs) {
+  public petEdited = (e: IGridEditDoneEventArgs): void => {
     if (e.isAddRow)
       return;
 
     this.petsService.update(e.newValue as Pet).pipe(first()).subscribe();
   }
 
-  public petDeleted(e: IRowDataEventArgs) {
-    this.petsService.delete(e.data as Pet).pipe(first()).subscribe();
+  public petDeleted = (e: CellType): void => {
+    this.petsService.delete(e.row.data as Pet).pipe(first()).subscribe({
+      next: c => e.grid.deleteRow(c),
+      error: err => console.log(err)
+    });
   }
 }
