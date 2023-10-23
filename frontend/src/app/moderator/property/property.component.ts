@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxGridToolbarComponent, IgxHierarchicalGridComponent, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';
 import { PropertyType } from 'src/app/models/enums/property-type';
 import { Residence } from 'src/app/models/enums/residence';
 import { Person } from 'src/app/models/person';
+import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { Pet } from 'src/app/models/pet';
 import { Property } from 'src/app/models/property';
 import { CarService } from '../car.service';
@@ -73,15 +74,12 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
     this.personRowIsland.rowAdded.pipe(takeUntil(this.destroy$)).subscribe(e => this.personAdded(e, this.personRowIsland));
     this.personRowIsland.rowEditDone.pipe(takeUntil(this.destroy$)).subscribe(this.personEdited);
-    this.personRowIsland.rowDeleted.pipe(takeUntil(this.destroy$)).subscribe(this.personDeleted);
 
     this.carRowIsland.rowAdded.pipe(takeUntil(this.destroy$)).subscribe(e => this.carAdded(e, this.carRowIsland));
     this.carRowIsland.rowEditDone.pipe(takeUntil(this.destroy$)).subscribe(this.carEdited);
-    this.carRowIsland.rowDeleted.pipe(takeUntil(this.destroy$)).subscribe(this.carDeleted);
 
     this.petRowIsland.rowAdded.pipe(takeUntil(this.destroy$)).subscribe(e => this.petAdded(e, this.petRowIsland));
     this.petRowIsland.rowEditDone.pipe(takeUntil(this.destroy$)).subscribe(this.petEdited);
-    this.petRowIsland.rowDeleted.pipe(takeUntil(this.destroy$)).subscribe(this.petDeleted);
   }
 
   ngOnDestroy(): void {
@@ -91,6 +89,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
   //#endregion  System overloads
 
   //#region CRUD
+  public addProperty = (grid: IgxHierarchicalGridComponent): void => {
+    grid.beginAddRowByIndex(0);
+  }
+
   public propertyAdded = (e: IRowDataEventArgs): void => {
     this.propertiesService.create(e.data as Property).pipe(first()).subscribe();
   }
@@ -102,8 +104,16 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.propertiesService.update(e.newValue as Property).pipe(first()).subscribe();
   }
 
-  public propertyDeleted = (e: IRowDataEventArgs): void => {
-    this.propertiesService.delete(e.data as Property).pipe(first()).subscribe();
+  public propertyDeleted = (e: CellType): void => {
+    this.propertiesService.delete(e.row.data as Property).pipe(first()).subscribe({
+      next: c => e.grid.deleteRow(c),
+      error: err => console.log(err)
+    });
+  }
+
+  public addPerson = (e: IgxGridToolbarComponent): void => {
+    const grid: IgxHierarchicalGridComponent = e.grid as IgxHierarchicalGridComponent;
+    grid.beginAddRowByIndex(0);
   }
 
   public personAdded = (e: IRowDataEventArgs, rowIsland: IgxRowIslandComponent): void => {
@@ -119,8 +129,16 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.personDescriptorService.update(e.newValue).pipe(first()).subscribe();
   }
 
-  public personDeleted = (e: IRowDataEventArgs): void => {
-    this.personDescriptorService.delete(e.data).pipe(first()).subscribe();
+  public personDeleted = (e: CellType): void => {
+    this.personDescriptorService.delete(e.row.data as PersonDescriptor).pipe(first()).subscribe({
+      next: c => e.grid.deleteRow(c.id),
+      error: err => console.log(err)
+    });
+  }
+
+  public addCar = (e: IgxGridToolbarComponent): void => {
+    const grid: IgxHierarchicalGridComponent = e.grid as IgxHierarchicalGridComponent;
+    grid.beginAddRowByIndex(0);
   }
 
   public carAdded = (e: IRowDataEventArgs, rowIsland: IgxRowIslandComponent): void => {
@@ -136,8 +154,16 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.propertiesService.updateCar(e.newValue).pipe(first()).subscribe();
   }
 
-  public carDeleted = (e: IRowDataEventArgs): void => {
-    this.propertiesService.deleteCar(e.data).pipe(first()).subscribe();
+  public carDeleted = (e: CellType): void => {
+    this.propertiesService.deleteCar(e.row.data as Car).pipe(first()).subscribe({
+      next: c => e.grid.deleteRow(c.id),
+      error: err => console.log(err)
+    });
+  }
+
+  public addPet = (e: IgxGridToolbarComponent): void => {
+    const grid: IgxHierarchicalGridComponent = e.grid as IgxHierarchicalGridComponent;
+    grid.beginAddRowByIndex(0);
   }
 
   public petAdded = (e: IRowDataEventArgs, rowIsland: IgxRowIslandComponent): void => {
@@ -153,8 +179,11 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.propertiesService.updatePet(e.newValue).pipe(first()).subscribe();
   }
 
-  public petDeleted = (e: IRowDataEventArgs): void => {
-    this.propertiesService.deletePet(e.data).pipe(first()).subscribe();
+  public petDeleted = (e: CellType): void => {
+    this.propertiesService.deletePet(e.row.data as Pet).pipe(first()).subscribe({
+      next: c => e.grid.deleteRow(c.id),
+      error: err => console.log(err)
+    });
   }
   //#endregion
 

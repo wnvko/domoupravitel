@@ -1,7 +1,19 @@
 <div class="container">
     <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="600px" [rowEditable]="true"
         [primaryKey]="'id'" (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)"
-        (rowDeleted)="propertyDeleted($event)" [sortingOptions]="sortingOptions">
+        [sortingOptions]="sortingOptions">
+        <igx-grid-toolbar>
+            <igx-grid-toolbar-actions>
+                <button igxButton (click)="addProperty(grid)">Добави имот</button>
+            </igx-grid-toolbar-actions>
+        </igx-grid-toolbar>
+        <igx-column width="60px" [editable]="false">
+            <ng-template igxCell let-cell="cell">
+                <button igxButton="icon" (click)="propertyDeleted(cell)">
+                    <igx-icon>delete</igx-icon>
+                </button>
+            </ng-template>
+        </igx-column>
         <igx-column field="type" header="Вид на имота" [sortable]="true">
             <ng-template igxCell let-cell="cell">
                 {{ parseType(cell.value) }}
@@ -18,14 +30,20 @@
         <igx-column field="number" header="Номер" [sortable]="true"></igx-column>
         <igx-column field="share" header="Дял в %" dataType="number" [sortable]="true"></igx-column>
 
-        <igx-action-strip>
-            <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-        </igx-action-strip>
-
         <igx-row-island #personRowIsland [key]="'people'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar [grid]="personRowIsland" *igxGridToolbar="let personRowIsland">
+            <igx-grid-toolbar #personToolbar [grid]="personRowIsland" *igxGridToolbar="let personRowIsland">
                 <igx-grid-toolbar-title>Хора</igx-grid-toolbar-title>
+                <igx-grid-toolbar-actions>
+                    <button igxButton (click)="addPerson(personToolbar)">Добави човек</button>
+                </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
+            <igx-column width="60px" [editable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" (click)="personDeleted(cell)">
+                        <igx-icon>delete</igx-icon>
+                    </button>
+                </ng-template>
+            </igx-column>
             <igx-column field="person" header="Име" [sortable]="true">
                 <ng-template igxCell let-cell="cell">
                     {{ cell.value?.name ?? '' }}
@@ -70,16 +88,22 @@
                 dataType="number"></igx-column>
             <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date"></igx-column>
             <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date"></igx-column>
-
-            <igx-action-strip>
-                <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-            </igx-action-strip>
         </igx-row-island>
 
         <igx-row-island #carRowIsland [key]="'cars'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar [grid]="carRowIsland" *igxGridToolbar="let carRowIsland">
+            <igx-grid-toolbar #carToolbar [grid]="carRowIsland" *igxGridToolbar="let carRowIsland">
                 <igx-grid-toolbar-title>Автомобили</igx-grid-toolbar-title>
+                <igx-grid-toolbar-actions>
+                    <button igxButton (click)="addCar(carToolbar)">Добави кола</button>
+                </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
+            <igx-column width="60px" [editable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" (click)="carDeleted(cell)">
+                        <igx-icon>delete</igx-icon>
+                    </button>
+                </ng-template>
+            </igx-column>
             <igx-column field="number" header="Регистрационен №" [sortable]="true">
                 <ng-template igxCellEditor let-cell="cell">
                     <igx-select type="border" [(ngModel)]="cell.editValue"
@@ -90,16 +114,22 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
-
-            <igx-action-strip>
-                <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-            </igx-action-strip>
         </igx-row-island>
 
         <igx-row-island #petRowIsland [key]="'pets'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar [grid]="petRowIsland" *igxGridToolbar="let petRowIsland">
+            <igx-grid-toolbar #petToolbar [grid]="petRowIsland" *igxGridToolbar="let petRowIsland">
                 <igx-grid-toolbar-title>Животни</igx-grid-toolbar-title>
+                <igx-grid-toolbar-actions>
+                    <button igxButton (click)="addPet(petToolbar)">Добави животно</button>
+                </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
+            <igx-column width="60px" [editable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" (click)="petDeleted(cell)">
+                        <igx-icon>delete</igx-icon>
+                    </button>
+                </ng-template>
+            </igx-column>
             <igx-column field="number" header="Номер" [sortable]="true">
                 <ng-template igxCellEditor let-cell="cell">
                     <igx-select type="border" [(ngModel)]="cell.editValue"
@@ -110,11 +140,6 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
-
-            <igx-action-strip>
-                <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-            </igx-action-strip>
         </igx-row-island>
-
     </igx-hierarchical-grid>
 </div>

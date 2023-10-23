@@ -3,7 +3,7 @@
     (rowAdded)="petAdded($event)" (rowEditDone)="petEdited($event)" [sortingOptions]="sortingOptions">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
-        <button igxButton (click)="addPet(grid)">Добави човек</button>
+        <button igxButton (click)="addPet(grid)">Добави животно</button>
       </igx-grid-toolbar-actions>
     </igx-grid-toolbar>
     <igx-column width="60px" [editable]="false">
@@ -15,8 +15,5 @@
     </igx-column>
     <igx-column field="number" header="Номер" [sortable]="true"></igx-column>
     <igx-column field="name" header="Име" [sortable]="true"></igx-column>
-    <igx-action-strip #actionstrip>
-      <igx-grid-editing-actions [addRow]="true"></igx-grid-editing-actions>
-    </igx-action-strip>
   </igx-grid>
 </div>

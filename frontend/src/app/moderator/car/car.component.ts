@@ -27,18 +27,18 @@ export class CarComponent {
     grid.beginAddRowByIndex(0);
   }
 
-  public carAdded(e: IRowDataEventArgs) {
+  public carAdded = (e: IRowDataEventArgs): void => {
     this.carsService.create(e.data as Car).pipe(first()).subscribe();
   }
 
-  public carEdited(e: IGridEditDoneEventArgs) {
+  public carEdited = (e: IGridEditDoneEventArgs): void => {
     if (e.isAddRow)
       return;
 
     this.carsService.update(e.newValue as Car).pipe(first()).subscribe();
   }
 
-  public carDeleted(e: CellType) {
+  public carDeleted = (e: CellType): void => {
     this.carsService.delete(e.row.data as Car).pipe(first()).subscribe({
       next: c => e.grid.deleteRow(c),
       error: err => console.log(err)
