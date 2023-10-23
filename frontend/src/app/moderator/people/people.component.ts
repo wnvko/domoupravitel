@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxGridComponent } from '@infragistics/igniteui-angular';
-import { Observable, first } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Person } from 'src/app/models/person';
 import { PeopleService } from '../people.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
   styleUrls: ['./people.component.scss']
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
+
+  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
+  private deleteDialog!: DeleteDialogComponent;
+
+  @ViewChild('dialog', { static: true, read: IgxDialogComponent })
+  private dialog!: IgxDialogComponent;
+
   public people!: Observable<Person[]>;
   public sortingOptions: ISortingOptions = {
     mode: 'single'
@@ -21,6 +30,12 @@ export class PeopleComponent implements OnInit {
 
   ngOnInit(): void {
     this.people = this.peopleService.all();
+    this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(e => this.dialog.close());
+  }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
   public addPerson = (grid: IgxGridComponent): void => {
@@ -36,6 +51,13 @@ export class PeopleComponent implements OnInit {
       return;
 
     this.peopleService.update(e.newValue as Person).pipe(first()).subscribe();
+  }
+
+  public startDeletePerson =(e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.personDeleted, args: e };
+    const person = e.row.data as Person;
+    this.deleteDialog.message = `${person.name} ще бъде изтрит/а!`;
+    this.dialog.open();
   }
 
   public personDeleted = (e: CellType): void => {

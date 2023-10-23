@@ -8,7 +8,7 @@
     </igx-grid-toolbar>
     <igx-column width="60px" [editable]="false">
       <ng-template igxCell let-cell="cell">
-        <button igxButton="icon" (click)="petDeleted(cell)">
+        <button igxButton="icon" (click)="startDeletePet(cell)">
           <igx-icon>delete</igx-icon>
         </button>
       </ng-template>
@@ -17,3 +17,4 @@
     <igx-column field="name" header="Име" [sortable]="true"></igx-column>
   </igx-grid>
 </div>
+<igx-dialog #dialog><app-delete-dialog #deleteDialog></app-delete-dialog></igx-dialog>

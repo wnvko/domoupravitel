@@ -9,7 +9,7 @@
         </igx-grid-toolbar>
         <igx-column width="60px" [editable]="false">
             <ng-template igxCell let-cell="cell">
-                <button igxButton="icon" (click)="propertyDeleted(cell)">
+                <button igxButton="icon" (click)="startDeleteProperty(cell)">
                     <igx-icon>delete</igx-icon>
                 </button>
             </ng-template>
@@ -39,7 +39,7 @@
             </igx-grid-toolbar>
             <igx-column width="60px" [editable]="false">
                 <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="personDeleted(cell)">
+                    <button igxButton="icon" (click)="startDeletePerson(cell)">
                         <igx-icon>delete</igx-icon>
                     </button>
                 </ng-template>
@@ -99,7 +99,7 @@
             </igx-grid-toolbar>
             <igx-column width="60px" [editable]="false">
                 <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="carDeleted(cell)">
+                    <button igxButton="icon" (click)="startDeleteCar(cell)">
                         <igx-icon>delete</igx-icon>
                     </button>
                 </ng-template>
@@ -114,6 +114,8 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
+            <igx-column field="brand" header="Марка" [sortable]="true" [editable]="false"></igx-column>
+            <igx-column field="color" header="Цвят" [sortable]="true" [editable]="false"></igx-column>
         </igx-row-island>
 
         <igx-row-island #petRowIsland [key]="'pets'" [primaryKey]="'id'" [rowEditable]="true">
@@ -125,7 +127,7 @@
             </igx-grid-toolbar>
             <igx-column width="60px" [editable]="false">
                 <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="petDeleted(cell)">
+                    <button igxButton="icon" (click)="startDeletePet(cell)">
                         <igx-icon>delete</igx-icon>
                     </button>
                 </ng-template>
@@ -140,6 +142,8 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
+            <igx-column field="name" header="Име" [sortable]="true" [editable]="false"></igx-column>
         </igx-row-island>
     </igx-hierarchical-grid>
 </div>
+<igx-dialog #dialog><app-delete-dialog #deleteDialog></app-delete-dialog></igx-dialog>

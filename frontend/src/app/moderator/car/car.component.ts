@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxGridComponent } from '@infragistics/igniteui-angular';
-import { Observable, first } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { CarService } from '../car.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss']
 })
-export class CarComponent {
+export class CarComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
+
+  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
+  private deleteDialog!: DeleteDialogComponent;
+
+  @ViewChild('dialog', { static: true, read: IgxDialogComponent })
+  private dialog!: IgxDialogComponent;
+
   public cars!: Observable<Car[]>;
   public sortingOptions: ISortingOptions = {
     mode: 'single'
@@ -21,6 +30,12 @@ export class CarComponent {
 
   ngOnInit(): void {
     this.cars = this.carsService.all();
+    this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(e => this.dialog.close());
+  }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public addCar = (grid: IgxGridComponent): void => {
@@ -36,6 +51,13 @@ export class CarComponent {
       return;
 
     this.carsService.update(e.newValue as Car).pipe(first()).subscribe();
+  }
+
+  public startDeleteCar =(e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.carDeleted, args: e };
+    const car = e.row.data as Car;
+    this.deleteDialog.message = `Кола ${car.number} ще бъде изтрита!`;
+    this.dialog.open();
   }
 
   public carDeleted = (e: CellType): void => {

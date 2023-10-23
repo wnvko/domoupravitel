@@ -8,7 +8,7 @@
     </igx-grid-toolbar>
     <igx-column width="60px" [editable]="false">
       <ng-template igxCell let-cell="cell">
-        <button igxButton="icon" (click)="personDeleted(cell)">
+        <button igxButton="icon" (click)="startDeletePerson(cell)">
           <igx-icon>delete</igx-icon>
         </button>
       </ng-template>
@@ -18,3 +18,4 @@
     <igx-column field="email" header="e-mail" [sortable]="true"></igx-column>
   </igx-grid>
 </div>
+<igx-dialog #dialog><app-delete-dialog #deleteDialog></app-delete-dialog></igx-dialog>

@@ -1,7 +1,6 @@
 <div class="container">
   <igx-grid #grid [data]="cars | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
-    (rowAdded)="carAdded($event)" (rowEditDone)="carEdited($event)"
-    [sortingOptions]="sortingOptions">
+    (rowAdded)="carAdded($event)" (rowEditDone)="carEdited($event)" [sortingOptions]="sortingOptions">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
         <button igxButton (click)="addCar(grid)">Добави кола</button>
@@ -9,7 +8,7 @@
     </igx-grid-toolbar>
     <igx-column width="60px" [editable]="false">
       <ng-template igxCell let-cell="cell">
-        <button igxButton="icon" (click)="carDeleted(cell)">
+        <button igxButton="icon" (click)="startDeleteCar(cell)">
           <igx-icon>delete</igx-icon>
         </button>
       </ng-template>
@@ -19,3 +18,4 @@
     <igx-column field="color" header="Цвят" [sortable]="true"></igx-column>
   </igx-grid>
 </div>
+<igx-dialog #dialog><app-delete-dialog #deleteDialog></app-delete-dialog></igx-dialog>

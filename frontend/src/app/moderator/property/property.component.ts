@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxGridToolbarComponent, IgxHierarchicalGridComponent, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridToolbarComponent, IgxHierarchicalGridComponent, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';
@@ -10,6 +10,7 @@ import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { Pet } from 'src/app/models/pet';
 import { Property } from 'src/app/models/property';
 import { CarService } from '../car.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { PeopleService } from '../people.service';
 import { PersonDescriptorService } from '../person-descriptor.service';
 import { PetService } from '../pet.service';
@@ -31,6 +32,12 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
   @ViewChild('petRowIsland', { static: true, read: IgxRowIslandComponent })
   private petRowIsland!: IgxRowIslandComponent;
+
+  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
+  private deleteDialog!: DeleteDialogComponent;
+
+  @ViewChild('dialog', { static: true, read: IgxDialogComponent })
+  private dialog!: IgxDialogComponent;
 
   public properties!: Observable<Property[]>;
   public people!: Observable<Person[]>;
@@ -80,6 +87,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
     this.petRowIsland.rowAdded.pipe(takeUntil(this.destroy$)).subscribe(e => this.petAdded(e, this.petRowIsland));
     this.petRowIsland.rowEditDone.pipe(takeUntil(this.destroy$)).subscribe(this.petEdited);
+
+    this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(e => this.dialog.close());
   }
 
   ngOnDestroy(): void {
@@ -102,6 +111,13 @@ export class PropertyComponent implements OnInit, OnDestroy {
       return;
 
     this.propertiesService.update(e.newValue as Property).pipe(first()).subscribe();
+  }
+
+  public startDeleteProperty =(e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.propertyDeleted, args: e };
+    const property = e.row.data as Property;
+    this.deleteDialog.message = `Имот ${property.number} ще бъде изтрит!`;
+    this.dialog.open();
   }
 
   public propertyDeleted = (e: CellType): void => {
@@ -129,9 +145,16 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.personDescriptorService.update(e.newValue).pipe(first()).subscribe();
   }
 
+  public startDeletePerson =(e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.personDeleted, args: e };
+    const personDescriptor = e.row.data as PersonDescriptor;
+    this.deleteDialog.message = `${personDescriptor.person.name} ще бъде изтрит/а!`;
+    this.dialog.open();
+  }
+
   public personDeleted = (e: CellType): void => {
     this.personDescriptorService.delete(e.row.data as PersonDescriptor).pipe(first()).subscribe({
-      next: c => e.grid.deleteRow(c.id),
+      next: c => e.grid.deleteRow(c),
       error: err => console.log(err)
     });
   }
@@ -152,6 +175,13 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
     this.propertiesService.deleteCar(e.oldValue).pipe(first()).subscribe();
     this.propertiesService.updateCar(e.newValue).pipe(first()).subscribe();
+  }
+
+  public startDeleteCar =(e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.carDeleted, args: e };
+    const car = e.row.data as Car;
+    this.deleteDialog.message = `Кола ${car.number} ще бъде изтрита!`;
+    this.dialog.open();
   }
 
   public carDeleted = (e: CellType): void => {
@@ -177,6 +207,13 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
     this.propertiesService.deletePet(e.oldValue).pipe(first()).subscribe();
     this.propertiesService.updatePet(e.newValue).pipe(first()).subscribe();
+  }
+
+  public startDeletePet = (e: CellType): void => {
+    this.deleteDialog.deleteFunction = { function: this.petDeleted, args: e };
+    const pet = e.row.data as Pet;
+    this.deleteDialog.message = `Животно ${pet.name} ще бъде изтрито!`;
+    this.dialog.open();
   }
 
   public petDeleted = (e: CellType): void => {
