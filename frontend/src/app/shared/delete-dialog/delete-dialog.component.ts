@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs } from '@infragistics/igniteui-angular';
+import { CellType } from '@infragistics/igniteui-angular';
 
 @Component({
   selector: 'app-delete-dialog',

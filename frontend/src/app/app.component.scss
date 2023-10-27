@@ -13,7 +13,8 @@
 .content-wrap {
   display: flex;
   height: 100%;
-  padding: 1em;
+  background-image: url(("../assets/background.png"));
+  background-size: cover;
 }
 
 .main {

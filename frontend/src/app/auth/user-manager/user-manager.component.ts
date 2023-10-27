@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { IGridEditDoneEventArgs, IRowDataEventArgs } from '@infragistics/igniteui-angular';
-import { first, Observable } from 'rxjs';
-import { User } from 'src/app/models/user';
-import { UserService } from '../user.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+import { Observable, first } from 'rxjs';
 import { Role } from 'src/app/models/enums/role';
+import { User } from 'src/app/models/user';
+import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-manager',
@@ -11,6 +12,12 @@ import { Role } from 'src/app/models/enums/role';
   styleUrls: ['./user-manager.component.scss']
 })
 export class UserManagerComponent implements OnInit {
+  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
+  private deleteDialog!: DeleteDialogComponent;
+
+  @ViewChild('dialog', { static: true, read: IgxDialogComponent })
+  private dialog!: IgxDialogComponent;
+
   public users!: Observable<User[]>;
   public roles = Object.keys(Role).filter(k => !isNaN(Number(k))).map(v => {
     if (parseInt(v) === Role.Admin) return { name: 'Администратор', value: 0 };
@@ -25,6 +32,10 @@ export class UserManagerComponent implements OnInit {
   ngOnInit(): void {
     this.users = this.user.all();
   }
+  
+  public addUser = (grid: IgxGridComponent): void => {
+    grid.beginAddRowByIndex(0);
+  }
 
   public userAdded(e: IRowDataEventArgs) {
     this.user.add(e.data as User).pipe(first()).subscribe();
@@ -32,6 +43,13 @@ export class UserManagerComponent implements OnInit {
 
   public userEdited(e: IGridEditDoneEventArgs) {
     this.user.update(e.newValue as User).pipe(first()).subscribe();
+  }
+  
+  public startDeleteUser =(e: CellType): void => {
+    // this.deleteDialog.deleteFunction = { function: this.userDeleted, args: e };
+    const user = e.row.data as User;
+    this.deleteDialog.message = `${user.userName} ще бъде изтрит/а!`;
+    this.dialog.open();
   }
 
   public parseRole(role: number): string {

@@ -1,5 +1,5 @@
 <div class="container">
-    <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="600px" [rowEditable]="true"
+    <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="700px" [rowEditable]="true"
         [primaryKey]="'id'" (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)"
         [sortingOptions]="sortingOptions">
         <igx-grid-toolbar>

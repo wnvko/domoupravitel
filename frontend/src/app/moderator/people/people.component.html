@@ -1,5 +1,5 @@
 <div class="container">
-  <igx-grid #grid [data]="people | async" width="800px" height="600px" [rowEditable]="true" [primaryKey]="'id'"
+  <igx-grid #grid [data]="people | async" width="100%" height="700px" [rowEditable]="true" [primaryKey]="'id'"
     (rowAdded)="personAdded($event)" (rowEditDone)="personEdited($event)" [sortingOptions]="sortingOptions">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
