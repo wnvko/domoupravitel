@@ -2,7 +2,9 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: hsl(var(--igx-primary-500));
+  // background-color: hsl(var(--igx-primary-500));
+  background-image: url(("../assets/background.png"));
+  background-size: cover;
 }
 
 .navbar-wrapper {
@@ -13,8 +15,6 @@
 .content-wrap {
   display: flex;
   height: 100%;
-  background-image: url(("../assets/background.png"));
-  background-size: cover;
 }
 
 .main {

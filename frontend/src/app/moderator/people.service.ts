@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -17,15 +17,15 @@ export class PeopleService {
         return this.http.get<Person[]>(`${this.serverUrl}/person/all`);
     }
 
-    public create(user: Person): Observable<Person> {
-        return this.http.post<Person>(`${this.serverUrl}/person/create`, user);
+    public create(person: Person): Observable<Person> {
+        return this.http.post<Person>(`${this.serverUrl}/person/create`, person);
     }
 
-    public update(user: Person): Observable<Person> {
-        return this.http.put<Person>(`${this.serverUrl}/person/update`, user);
+    public update(person: Person): Observable<Person> {
+        return this.http.put<Person>(`${this.serverUrl}/person/update`, person);
     }
 
-    public delete(user: Person): Observable<Person> {
-        return this.http.delete<Person>(`${this.serverUrl}/person/delete`, { body: user });
+    public delete(person: Person): Observable<Person> {
+        return this.http.delete<Person>(`${this.serverUrl}/person/delete`, { body: person });
     }
 }

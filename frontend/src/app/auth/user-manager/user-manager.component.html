@@ -6,13 +6,13 @@
         <button igxButton (click)="addUser(grid)">Добави потребител</button>
       </igx-grid-toolbar-actions>
     </igx-grid-toolbar>
-    <!-- <igx-column width="60px" [editable]="false">
+    <igx-column width="60px" [editable]="false">
       <ng-template igxCell let-cell="cell">
         <button igxButton="icon" (click)="startDeleteUser(cell)">
           <igx-icon>delete</igx-icon>
         </button>
       </ng-template>
-    </igx-column> -->
+    </igx-column>
     <igx-column field="userName" header="Потребителско име"></igx-column>
     <igx-column field="role" header="Роля">
       <ng-template igxCell let-cell="cell">

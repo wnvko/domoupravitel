@@ -57,11 +57,13 @@ export class UserService {
     return this.http.put<User>(`${this.serverUrl}/user/changePassword`, request);
   }
 
-
-  public update(user: User) {
+  public update(user: User): Observable<User> {
     return this.http.put<User>(`${this.serverUrl}/user/update`, user);
   }
-
+  
+  public delete(user: User): Observable<User> {
+    return this.http.delete<User>(`${this.serverUrl}/user/delete`, { body: user });
+  }
 
   public login(username: string, password: string): Observable<JWT> {
     return this.http.post<JWT>(`${this.serverUrl}/auth/login`, { username, password });

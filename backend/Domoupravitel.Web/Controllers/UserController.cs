@@ -103,12 +103,29 @@ namespace Domoupravitel.Web.Controllers
                 .SearchFor(u => u.Id == request.Id)
                 .FirstOrDefault();
             if (managedUser == null) return BadRequest("User not found");
+
             managedUser.UserName = request.UserName;
             managedUser.Name = request.UserName;
             managedUser.Role = request.Role;
             this._data.Users.Update(managedUser);
             this._data.SaveChanges();
             return CreatedAtAction(nameof(Update), managedUser, request);
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public ActionResult<User> Delete(User request)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var managedUser = this._data.Users
+                .SearchFor(u => u.Id == request.Id)
+                .FirstOrDefault();
+            if (managedUser == null) return BadRequest("User not found");
+
+            this._data.Users.Delete(managedUser);
+            this._data.SaveChanges();
+            return new OkObjectResult(managedUser);
         }
     }
 }
