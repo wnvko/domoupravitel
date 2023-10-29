@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { IgxActionStripModule, IgxDialogModule, IgxGridModule, IgxHierarchicalGridModule, IgxIconModule } from '@infragistics/igniteui-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IgxActionStripModule, IgxButtonModule, IgxDialogModule, IgxGridModule, IgxHierarchicalGridModule, IgxIconModule, IgxSelectModule } from '@infragistics/igniteui-angular';
 import { SharedModule } from '../shared/shared.module';
 import { CarComponent } from './car/car.component';
 import { ModeratorRoutingModule } from './moderator-routing.module';
@@ -19,13 +20,17 @@ import { PropertyComponent } from './property/property.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ModeratorRoutingModule,
     SharedModule,
     IgxActionStripModule,
+    IgxButtonModule,
     IgxDialogModule,
+    IgxGridModule,
     IgxHierarchicalGridModule,
     IgxIconModule,
-    IgxGridModule,
+    IgxSelectModule
   ]
 })
 export class ModeratorModule { }

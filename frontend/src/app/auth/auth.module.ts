@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { IgxActionStripModule, IgxButtonModule, IgxCardModule, IgxDialogModule, IgxGridModule, IgxInputGroupModule, IgxRippleModule, IgxToastModule } from '@infragistics/igniteui-angular';
+import { IgxActionStripModule, IgxButtonModule, IgxCardModule, IgxDialogModule, IgxGridModule, IgxIconModule, IgxInputGroupModule, IgxRippleModule, IgxSelectModule, IgxToastModule } from '@infragistics/igniteui-angular';
 import { SharedModule } from "../shared/shared.module";
 import { AuthRoutingModule } from "./auth-routing.module";
 import { LoginComponent } from "./login/login.component";
@@ -26,7 +26,9 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
         IgxGridModule,
         IgxDialogModule,
         IgxInputGroupModule,
+        IgxIconModule,
         IgxRippleModule,
+        IgxSelectModule,
         IgxToastModule
     ]
 })
