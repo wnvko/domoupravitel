@@ -1,0 +1,23 @@
+<div class="container">
+    <form [formGroup]="person" (ngSubmit)="onSubmit()">
+      <igx-input-group type="border">
+        <input igxInput name="name" type="text" formControlName="name">
+        <label igxLabel for="username">Име</label>
+        <igx-hint>Въведете името на човека</igx-hint>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input igxInput name="phone" type="text" formControlName="phone">
+        <label igxLabel for="phone">Телефон</label>
+        <igx-hint>Въведете телефония номер на човека</igx-hint>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input igxInput name="email" type="text" formControlName="email">
+        <label igxLabel for="email">e-mail</label>
+        <igx-hint>Въведете електрония адрес на човека</igx-hint>
+      </igx-input-group>
+      <div class="actions">
+        <button igxButton="raised" type="submit" igxRipple [disabled]="!person.valid">Влез</button>
+      </div>
+    </form>
+  </div>
+  
