@@ -3,7 +3,7 @@ import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, IgxDialogComponent
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Role } from 'src/app/models/enums/role';
 import { User } from 'src/app/models/user';
-import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { UserService } from '../user.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { UserService } from '../user.service';
 export class UserManagerComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
-  private deleteDialog!: DeleteDialogComponent;
+  @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
+  private deleteDialog!: DeleteComponent;
 
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;

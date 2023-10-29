@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CellType } from '@infragistics/igniteui-angular';
 
 @Component({
-  selector: 'app-delete-dialog',
-  templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.scss']
+  selector: 'app-delete',
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.scss']
 })
-export class DeleteDialogComponent {
+export class DeleteComponent {
   @Input()
   public deleteFunction!: { function: (e: CellType) => void, args: CellType } | undefined
 

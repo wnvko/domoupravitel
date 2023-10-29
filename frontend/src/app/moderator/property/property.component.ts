@@ -1,5 +1,16 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridToolbarComponent, IgxHierarchicalGridComponent, IgxRowIslandComponent } from '@infragistics/igniteui-angular';
+import {
+  CellType,
+  IGridEditDoneEventArgs,
+  IRowDataEventArgs,
+  ISortingOptions,
+  IgxDialogComponent,
+  IgxGridToolbarComponent,
+  IgxHierarchicalGridComponent,
+  IgxRowIslandComponent,
+  ISimpleComboSelectionChangingEventArgs,
+  IgxSimpleComboComponent
+} from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { PersonType } from 'src/app/models/enums/person-type';
@@ -9,7 +20,7 @@ import { Person } from 'src/app/models/person';
 import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { Pet } from 'src/app/models/pet';
 import { Property } from 'src/app/models/property';
-import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { CarService } from '../car.service';
 import { PeopleService } from '../people.service';
 import { PersonDescriptorService } from '../person-descriptor.service';
@@ -33,8 +44,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
   @ViewChild('petRowIsland', { static: true, read: IgxRowIslandComponent })
   private petRowIsland!: IgxRowIslandComponent;
 
-  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
-  private deleteDialog!: DeleteDialogComponent;
+  @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
+  private deleteDialog!: DeleteComponent;
 
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;
@@ -113,7 +124,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.propertiesService.update(e.newValue as Property).pipe(first()).subscribe();
   }
 
-  public startDeleteProperty =(e: CellType): void => {
+  public startDeleteProperty = (e: CellType): void => {
     this.deleteDialog.deleteFunction = { function: this.propertyDeleted, args: e };
     const property = e.row.data as Property;
     this.deleteDialog.message = `Имот ${property.number} ще бъде изтрит!`;
@@ -142,10 +153,11 @@ export class PropertyComponent implements OnInit, OnDestroy {
   public personEdited = (e: IGridEditDoneEventArgs): void => {
     if (e.isAddRow) return;
 
+    e.newValue.personId = e.newValue.person.id;
     this.personDescriptorService.update(e.newValue).pipe(first()).subscribe();
   }
 
-  public startDeletePerson =(e: CellType): void => {
+  public startDeletePerson = (e: CellType): void => {
     this.deleteDialog.deleteFunction = { function: this.personDeleted, args: e };
     const personDescriptor = e.row.data as PersonDescriptor;
     this.deleteDialog.message = `${personDescriptor.person.name} ще бъде изтрит/а!`;
@@ -157,6 +169,12 @@ export class PropertyComponent implements OnInit, OnDestroy {
       next: c => e.grid.deleteRow(c),
       error: err => console.log(err)
     });
+  }
+
+  public personSelected = (e: ISimpleComboSelectionChangingEventArgs, cell: CellType): void => {
+    const combo = e.owner as IgxSimpleComboComponent;
+    const person = combo.data?.find(p => p.id === e.newSelection) as Person;
+    cell.editValue = person;
   }
 
   public addCar = (e: IgxGridToolbarComponent): void => {
@@ -177,7 +195,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.propertiesService.updateCar(e.newValue).pipe(first()).subscribe();
   }
 
-  public startDeleteCar =(e: CellType): void => {
+  public startDeleteCar = (e: CellType): void => {
     this.deleteDialog.deleteFunction = { function: this.carDeleted, args: e };
     const car = e.row.data as Car;
     this.deleteDialog.message = `Кола ${car.number} ще бъде изтрита!`;

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Person } from 'src/app/models/person';
-import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { PeopleService } from '../people.service';
 
 @Component({
@@ -13,8 +13,8 @@ import { PeopleService } from '../people.service';
 export class PeopleComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
-  private deleteDialog!: DeleteDialogComponent;
+  @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
+  private deleteDialog!: DeleteComponent;
 
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;
