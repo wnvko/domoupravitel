@@ -52,7 +52,7 @@
                     <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue?.id"
                         (selectionChanging)="personSelected($event, cell)" valueKey="id" displayKey="name">
                         <igx-prefix>
-                            <button igxButton="icon" (click)="addNewPerson()">
+                            <button igxButton="icon" (click)="addNewPerson()" title="Добави човек">
                                 <igx-icon>person_add</igx-icon>
                             </button>
                         </igx-prefix>
