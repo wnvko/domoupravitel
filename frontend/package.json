@@ -31,7 +31,7 @@
     "@angular-devkit/build-angular": "^16.2.8",
     "@angular/cli": "~16.2.8",
     "@angular/compiler-cli": "^16.2.11",
-    "@igniteui/angular-schematics": "~15.0.1100",
+    "@igniteui/angular-schematics": "~16.0.1206",
     "@types/hammerjs": "^2.0.40",
     "@types/jasmine": "~4.3.0",
     "igniteui-angular-i18n": "^16.1.3",
