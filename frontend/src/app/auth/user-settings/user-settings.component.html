@@ -22,8 +22,8 @@
         </div>
       </igx-card-content>
       <igx-card-actions [reverse]="true">
-        <button type="button" igxButton="flat" igxRipple [igxRippleCentered]="true" (click)="clearForm()">Изчисти</button>
-        <button igxButton="raised" igxRipple [igxRippleCentered]="true" [disabled]="!updatePassword.valid">Потвърди</button>
+        <button type="button" igxButton="flat" igxRipple [igxRippleCentered]="true" (click)="clearForm()" igxStart>Изчисти</button>
+        <button igxButton="raised" igxRipple [igxRippleCentered]="true" [disabled]="!updatePassword.valid" igxStart>Потвърди</button>
       </igx-card-actions>
     </form>
   </igx-card>
