@@ -16,7 +16,8 @@
         <igx-hint>Въведете електрония адрес на човека</igx-hint>
       </igx-input-group>
       <div class="actions">
-        <button igxButton="raised" type="submit" igxRipple [disabled]="!person.valid">Влез</button>
+        <button igxButton="flat" type="button" igxRipple (click)="cancel()">Откажи</button>
+        <button igxButton="raised" type="submit" igxRipple [disabled]="!person.valid">Добави</button>
       </div>
     </form>
   </div>

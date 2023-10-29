@@ -34,7 +34,7 @@
             <igx-grid-toolbar #personToolbar [grid]="personRowIsland" *igxGridToolbar="let personRowIsland">
                 <igx-grid-toolbar-title>Хора</igx-grid-toolbar-title>
                 <igx-grid-toolbar-actions>
-                    <button igxButton (click)="addPerson(personToolbar)">Добави човек</button>
+                    <button igxButton (click)="addPersonDescriptor(personToolbar)">Добави човек</button>
                 </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
             <igx-column width="60px" [editable]="false">
@@ -49,10 +49,10 @@
                     {{ cell.value?.name ?? '' }}
                 </ng-template>
                 <ng-template igxCellEditor let-cell="cell">
-                    <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue.id"
+                    <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue?.id"
                         (selectionChanging)="personSelected($event, cell)" valueKey="id" displayKey="name">
                         <igx-prefix>
-                            <button igxButton="icon">
+                            <button igxButton="icon" (click)="addNewPerson()">
                                 <igx-icon>person_add</igx-icon>
                             </button>
                         </igx-prefix>
@@ -147,4 +147,5 @@
         </igx-row-island>
     </igx-hierarchical-grid>
 </div>
-<igx-dialog #dialog><app-delete #deleteDialog></app-delete></igx-dialog>
+<igx-dialog #deleteDialog><app-delete #delete></app-delete></igx-dialog>
+<igx-dialog #addPersonDialog><app-add-person #addPerson></app-add-person></igx-dialog>

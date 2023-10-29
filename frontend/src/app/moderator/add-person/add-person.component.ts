@@ -10,11 +10,11 @@ import { PeopleService } from '../people.service';
 })
 export class AddPersonComponent {
   public person: FormGroup;
-  
+
   @Output()
   public added: EventEmitter<Person | undefined> = new EventEmitter<Person | undefined>();
 
-  constructor(fb: FormBuilder, private peopleService: PeopleService){
+  constructor(fb: FormBuilder, private peopleService: PeopleService) {
     this.person = fb.group({
       name: ['', Validators.required],
       phone: [''],
@@ -22,7 +22,7 @@ export class AddPersonComponent {
     });
   }
 
-  public onSubmit(): void {
+  public onSubmit = (): void => {
     if (this.person.valid) {
       this.peopleService.create(this.person.value).subscribe({
         next: (p) => {
@@ -35,5 +35,10 @@ export class AddPersonComponent {
         }
       });
     }
+  }
+
+  public cancel = (): void => {
+    this.added.emit(undefined);
+    this.person.reset();
   }
 }

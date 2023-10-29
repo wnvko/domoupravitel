@@ -21,6 +21,7 @@ import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { Pet } from 'src/app/models/pet';
 import { Property } from 'src/app/models/property';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
+import { AddPersonComponent } from '../add-person/add-person.component';
 import { CarService } from '../car.service';
 import { PeopleService } from '../people.service';
 import { PersonDescriptorService } from '../person-descriptor.service';
@@ -44,11 +45,17 @@ export class PropertyComponent implements OnInit, OnDestroy {
   @ViewChild('petRowIsland', { static: true, read: IgxRowIslandComponent })
   private petRowIsland!: IgxRowIslandComponent;
 
-  @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
-  private deleteDialog!: DeleteComponent;
+  @ViewChild('delete', { static: true, read: DeleteComponent })
+  private delete!: DeleteComponent;
 
-  @ViewChild('dialog', { static: true, read: IgxDialogComponent })
-  private dialog!: IgxDialogComponent;
+  @ViewChild('deleteDialog', { static: true, read: IgxDialogComponent })
+  private deleteDialog!: IgxDialogComponent;
+  
+  @ViewChild('addPerson', { static: true, read: AddPersonComponent })
+  private addPerson!: AddPersonComponent;
+
+  @ViewChild('addPersonDialog', { static: true, read: IgxDialogComponent })
+  private addPersonDialog!: IgxDialogComponent;
 
   public properties!: Observable<Property[]>;
   public people!: Observable<Person[]>;
@@ -99,7 +106,13 @@ export class PropertyComponent implements OnInit, OnDestroy {
     this.petRowIsland.rowAdded.pipe(takeUntil(this.destroy$)).subscribe(e => this.petAdded(e, this.petRowIsland));
     this.petRowIsland.rowEditDone.pipe(takeUntil(this.destroy$)).subscribe(this.petEdited);
 
-    this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(e => this.dialog.close());
+    this.delete.result.pipe(takeUntil(this.destroy$)).subscribe(e => this.deleteDialog.close());
+    this.addPerson.added.pipe(takeUntil(this.destroy$)).subscribe(e => {
+      if (e) {
+        this.people = this.peopleService.all();
+      }
+      this.addPersonDialog.close();
+    });
   }
 
   ngOnDestroy(): void {
@@ -125,10 +138,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
   }
 
   public startDeleteProperty = (e: CellType): void => {
-    this.deleteDialog.deleteFunction = { function: this.propertyDeleted, args: e };
+    this.delete.deleteFunction = { function: this.propertyDeleted, args: e };
     const property = e.row.data as Property;
-    this.deleteDialog.message = `Имот ${property.number} ще бъде изтрит!`;
-    this.dialog.open();
+    this.delete.message = `Имот ${property.number} ще бъде изтрит!`;
+    this.deleteDialog.open();
   }
 
   public propertyDeleted = (e: CellType): void => {
@@ -138,11 +151,15 @@ export class PropertyComponent implements OnInit, OnDestroy {
     });
   }
 
-  public addPerson = (e: IgxGridToolbarComponent): void => {
+  public addPersonDescriptor = (e: IgxGridToolbarComponent): void => {
     const grid: IgxHierarchicalGridComponent = e.grid as IgxHierarchicalGridComponent;
     grid.beginAddRowByIndex(0);
   }
 
+  public addNewPerson = (): void => {
+    this.addPersonDialog.open();
+  }
+  
   public personAdded = (e: IRowDataEventArgs, rowIsland: IgxRowIslandComponent): void => {
     const propertyId = rowIsland.gridAPI.getParentRowId(e.owner);
     e.data.propertyId = propertyId;
@@ -158,10 +175,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
   }
 
   public startDeletePerson = (e: CellType): void => {
-    this.deleteDialog.deleteFunction = { function: this.personDeleted, args: e };
+    this.delete.deleteFunction = { function: this.personDeleted, args: e };
     const personDescriptor = e.row.data as PersonDescriptor;
-    this.deleteDialog.message = `${personDescriptor.person.name} ще бъде изтрит/а!`;
-    this.dialog.open();
+    this.delete.message = `${personDescriptor.person.name} ще бъде изтрит/а!`;
+    this.deleteDialog.open();
   }
 
   public personDeleted = (e: CellType): void => {
@@ -196,10 +213,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
   }
 
   public startDeleteCar = (e: CellType): void => {
-    this.deleteDialog.deleteFunction = { function: this.carDeleted, args: e };
+    this.delete.deleteFunction = { function: this.carDeleted, args: e };
     const car = e.row.data as Car;
-    this.deleteDialog.message = `Кола ${car.number} ще бъде изтрита!`;
-    this.dialog.open();
+    this.delete.message = `Кола ${car.number} ще бъде изтрита!`;
+    this.deleteDialog.open();
   }
 
   public carDeleted = (e: CellType): void => {
@@ -228,10 +245,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
   }
 
   public startDeletePet = (e: CellType): void => {
-    this.deleteDialog.deleteFunction = { function: this.petDeleted, args: e };
+    this.delete.deleteFunction = { function: this.petDeleted, args: e };
     const pet = e.row.data as Pet;
-    this.deleteDialog.message = `Животно ${pet.name} ще бъде изтрито!`;
-    this.dialog.open();
+    this.delete.message = `Животно ${pet.name} ще бъде изтрито!`;
+    this.deleteDialog.open();
   }
 
   public petDeleted = (e: CellType): void => {
