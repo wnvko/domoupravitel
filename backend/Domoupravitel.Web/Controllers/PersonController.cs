@@ -77,6 +77,11 @@ namespace Domoupravitel.Web.Controllers
             var person = this._data.People.SearchFor(p => p.Id == request.Id).FirstOrDefault();
             if (person == null) return BadRequest("Person not found");
 
+            foreach (var descriptor in person.Descriptors)
+            {
+                this._data.Descriptors.Delete(descriptor);
+            }
+
             this._data.People.Delete(person);
             this._data.SaveChanges();
             return CreatedAtAction(nameof(Delete), person.Id);

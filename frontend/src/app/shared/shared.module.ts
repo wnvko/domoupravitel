@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IgxButtonModule } from '@infragistics/igniteui-angular';
-import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { DeleteComponent } from './delete/delete.component';
 
 @NgModule({
   declarations: [
-    DeleteDialogComponent,
+    DeleteComponent,
   ],
   imports: [
     CommonModule,
     IgxButtonModule,
   ],
   exports: [
-    DeleteDialogComponent,
+    DeleteComponent,
   ]
 })
 export class SharedModule { }

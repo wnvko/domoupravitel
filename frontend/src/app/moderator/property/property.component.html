@@ -34,7 +34,7 @@
             <igx-grid-toolbar #personToolbar [grid]="personRowIsland" *igxGridToolbar="let personRowIsland">
                 <igx-grid-toolbar-title>Хора</igx-grid-toolbar-title>
                 <igx-grid-toolbar-actions>
-                    <button igxButton (click)="addPerson(personToolbar)">Добави човек</button>
+                    <button igxButton (click)="addPersonDescriptor(personToolbar)">Добави човек</button>
                 </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
             <igx-column width="60px" [editable]="false">
@@ -44,18 +44,19 @@
                     </button>
                 </ng-template>
             </igx-column>
-            <igx-column field="person" header="Име" [sortable]="true">
+            <igx-column field="person" header="Име" [sortable]="true" width="280px">
                 <ng-template igxCell let-cell="cell">
                     {{ cell.value?.name ?? '' }}
                 </ng-template>
                 <ng-template igxCellEditor let-cell="cell">
-                    <igx-select type="border" [(ngModel)]="cell.editValue"
-                        style="height: max-content; min-width: min-content;">
-                        <igx-select-item [value]="cell.editValue?.id == person.id ? cell.editValue : person"
-                            *ngFor="let person of people | async | sort:'name'">
-                            {{person.name}}
-                        </igx-select-item>
-                    </igx-select>
+                    <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue?.id"
+                        (selectionChanging)="personSelected($event, cell)" valueKey="id" displayKey="name">
+                        <igx-prefix>
+                            <button igxButton="icon" (click)="addNewPerson()" title="Добави човек">
+                                <igx-icon>person_add</igx-icon>
+                            </button>
+                        </igx-prefix>
+                    </igx-simple-combo>
                 </ng-template>
             </igx-column>
             <igx-column field="type" header="Вид" [sortable]="true">
@@ -146,4 +147,5 @@
         </igx-row-island>
     </igx-hierarchical-grid>
 </div>
-<igx-dialog #dialog><app-delete-dialog #deleteDialog></app-delete-dialog></igx-dialog>
+<igx-dialog #deleteDialog><app-delete #delete></app-delete></igx-dialog>
+<igx-dialog #addPersonDialog><app-add-person #addPerson></app-add-person></igx-dialog>

@@ -91,6 +91,11 @@ namespace Domoupravitel.Web.Controllers
             var property = this._data.Properties.SearchFor(p => p.Id == request.Id).FirstOrDefault();
             if (property == null) return BadRequest("Property not found");
 
+            foreach (var descriptor in property.People)
+            {
+                this._data.Descriptors.Delete(descriptor);
+            }
+
             this._data.Properties.Delete(property);
             this._data.SaveChanges();
             return CreatedAtAction(nameof(Delete), property.Id);

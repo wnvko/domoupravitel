@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Pet } from 'src/app/models/pet';
-import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { PetService } from '../pet.service';
 
 @Component({
@@ -13,8 +13,8 @@ import { PetService } from '../pet.service';
 export class PetComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
-  @ViewChild('deleteDialog', { static: true, read: DeleteDialogComponent })
-  private deleteDialog!: DeleteDialogComponent;
+  @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
+  private deleteDialog!: DeleteComponent;
 
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;
