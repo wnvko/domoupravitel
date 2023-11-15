@@ -16,6 +16,11 @@
     <igx-column field="name" header="Име" [sortable]="true"></igx-column>
     <igx-column field="phone" header="Телефон" [sortable]="true"></igx-column>
     <igx-column field="email" header="e-mail" [sortable]="true"></igx-column>
+    <igx-column field="email" header="Имоти" [editable]="false">
+      <ng-template igxCell let-cell="cell">
+        {{ renderProperties(cell) }}
+      </ng-template>
+    </igx-column>
   </igx-grid>
 </div>
 <igx-dialog #dialog><app-delete #deleteDialog></app-delete></igx-dialog>

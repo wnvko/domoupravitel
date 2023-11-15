@@ -66,4 +66,9 @@ export class PeopleComponent implements OnInit, OnDestroy {
       error: err => console.log(err)
     });
   }
+
+  public renderProperties = (cell: CellType): string => {
+    var person: Person = cell.row.data;
+    return person.descriptors.map(d => d.property.number).join(', ');
+  }
 }
