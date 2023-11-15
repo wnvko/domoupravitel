@@ -1,4 +1,5 @@
-﻿using Domoupravitel.Data.UnitOfWork;
+﻿using System.Data.Entity;
+using Domoupravitel.Data.UnitOfWork;
 using Domoupravitel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,18 @@ namespace Domoupravitel.Web.Controllers
         [Route("all")]
         public IEnumerable<Person> All()
         {
-            var result = this._data.People.All();
+            var result = this._data.People
+                .All()
+                .Include(p => p.Descriptors.Select(d => d.Property))
+                .ToList();
+            var t = this._data.Properties
+                .All()
+                .ToList();
+            var d = this._data.Descriptors
+                .All()
+                .Include(d => d.Person)
+                .Include(d => d.Property)
+                .ToList();
             return result;
         }
 
