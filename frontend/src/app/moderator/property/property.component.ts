@@ -70,7 +70,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
   public personTypes = Object.keys(PersonType).filter(k => !isNaN(Number(k))).map(v => {
     if (parseInt(v) === PersonType.Owner) return { name: 'Собственик', value: 0 };
     if (parseInt(v) === PersonType.User) return { name: 'Ползвател', value: 1 };
-    return { name: 'Наемател', value: 2 };
+    if (parseInt(v) === PersonType.Renter) return { name: 'Наемател', value: 2 };
+    return { name: 'Външен', value: 3 };
   });
   public residencies = Object.keys(Residence).filter(k => !isNaN(Number(k))).map(v => {
     if (parseInt(v) === Residence.Permanent) return { name: 'Постоянно', value: 0 };
@@ -272,6 +273,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
     if (type === 0) return 'Собственик';
     if (type === 1) return 'Ползвател';
     if (type === 2) return 'Наемател';
+    if (type === 3) return 'Външен';
     return '';
   }
 
