@@ -6,5 +6,6 @@ export interface Person {
     phone: string;
     email: string;
     descriptors: PersonDescriptor[];
+    birthDate: Date;
     hasChip: boolean;
 }

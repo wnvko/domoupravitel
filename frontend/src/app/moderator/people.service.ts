@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Person } from "../models/person";
+import { cleanDate } from "../shared/util";
 
 @Injectable({
     providedIn: 'root'
@@ -18,10 +19,12 @@ export class PeopleService {
     }
 
     public create(person: Person): Observable<Person> {
+        person.birthDate = cleanDate(person.birthDate);
         return this.http.post<Person>(`${this.serverUrl}/person/create`, person);
     }
 
     public update(person: Person): Observable<Person> {
+        person.birthDate = cleanDate(person.birthDate);
         return this.http.put<Person>(`${this.serverUrl}/person/update`, person);
     }
 

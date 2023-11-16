@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   IgxActionStripModule,
   IgxButtonModule,
+  IgxDatePickerModule,
   IgxDialogModule,
   IgxGridModule,
   IgxHierarchicalGridModule,
@@ -40,6 +41,7 @@ import { PropertyComponent } from './property/property.component';
     IgxActionStripModule,
     IgxButtonModule,
     IgxSimpleComboModule,
+    IgxDatePickerModule,
     IgxDialogModule,
     IgxGridModule,
     IgxHierarchicalGridModule,

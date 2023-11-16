@@ -19,6 +19,7 @@ export class AddPersonComponent {
       name: ['', Validators.required],
       phone: [''],
       email: [''],
+      birthDate: [],
       hasChip: []
     });
   }
