@@ -1,7 +1,9 @@
+import { registerLocaleData } from '@angular/common';
+import localeBG from '@angular/common/locales/bg';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './auth/user.service';
 import { changei18n } from '@infragistics/igniteui-angular';
 import { IgxResourceStringsBG } from 'igniteui-angular-i18n';
+import { UserService } from './auth/user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +15,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     changei18n(IgxResourceStringsBG);
+    registerLocaleData(localeBG);
   }
 }
