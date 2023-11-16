@@ -53,6 +53,7 @@ namespace Domoupravitel.Web.Controllers
                 Email = request.Email ?? string.Empty,
                 Phone = request.Phone ?? string.Empty,
                 HasChip = request.HasChip,
+                BirthDate = request.BirthDate,
             };
             this._data.People.Add(person);
             this._data.SaveChanges();
@@ -75,6 +76,7 @@ namespace Domoupravitel.Web.Controllers
             person.Phone = request.Phone;
             person.Email = request.Email;
             person.HasChip = request.HasChip;
+            person.BirthDate = request.BirthDate;
 
             this._data.People.Update(person);
             this._data.SaveChanges();

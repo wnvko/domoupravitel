@@ -18,6 +18,8 @@ namespace Domoupravitel.Models
 
         public bool HasChip { get; set; }
 
+        public DateTime? BirthDate { get; set; }
+
         public virtual ICollection<PersonDescriptor> Descriptors
         {
             get { return this.descriptors; }

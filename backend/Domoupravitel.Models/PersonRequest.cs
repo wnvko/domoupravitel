@@ -12,5 +12,7 @@ namespace Domoupravitel.Models
         public string Email { get; set; }
 
         public bool HasChip { get; set; }
+
+        public DateTime? BirthDate { get; set; }
     }
 }
