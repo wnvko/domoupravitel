@@ -37,14 +37,14 @@
                     <button igxButton (click)="addPersonDescriptor(personToolbar)">Добави човек</button>
                 </igx-grid-toolbar-actions>
             </igx-grid-toolbar>
-            <igx-column width="60px" [editable]="false">
+            <igx-column width="60px" [editable]="false" [resizable]="true">
                 <ng-template igxCell let-cell="cell">
                     <button igxButton="icon" (click)="startDeletePerson(cell)">
                         <igx-icon>delete</igx-icon>
                     </button>
                 </ng-template>
             </igx-column>
-            <igx-column field="person" header="Име" [sortable]="true" width="280px">
+            <igx-column field="person" header="Име" [sortable]="true" width="280px" [resizable]="true">
                 <ng-template igxCell let-cell="cell">
                     {{ cell.value?.name ?? '' }}
                 </ng-template>
@@ -59,7 +59,7 @@
                     </igx-simple-combo>
                 </ng-template>
             </igx-column>
-            <igx-column field="type" header="Вид" [sortable]="true">
+            <igx-column field="type" header="Вид" [sortable]="true" [resizable]="true">
                 <ng-template igxCell let-cell="cell">
                     {{ parsePersonType(cell.value) }}
                 </ng-template>
@@ -72,7 +72,7 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
-            <igx-column field="residence" header="Присъствие" [sortable]="true">
+            <igx-column field="residence" header="Присъствие" [sortable]="true" [resizable]="true">
                 <ng-template igxCell let-cell="cell">
                     {{ parseResidence(cell.value) }}
                 </ng-template>
@@ -86,9 +86,9 @@
                 </ng-template>
             </igx-column>
             <igx-column field="monthsInHouse" header="Месеци/Година в имота" [sortable]="true"
-                dataType="number"></igx-column>
-            <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date"></igx-column>
-            <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date"></igx-column>
+                dataType="number" [resizable]="true"></igx-column>
+            <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
+            <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
         </igx-row-island>
 
         <igx-row-island #carRowIsland [key]="'cars'" [primaryKey]="'id'" [rowEditable]="true">
