@@ -16,6 +16,7 @@
     <igx-column field="name" header="Име" [sortable]="true"></igx-column>
     <igx-column field="phone" header="Телефон" [sortable]="true"></igx-column>
     <igx-column field="email" header="e-mail" [sortable]="true"></igx-column>
+    <igx-column field="hasChip" header="Чип" [dataType]="'boolean'" [width]="'80px'"></igx-column>
     <igx-column field="email" header="Имоти" [editable]="false">
       <ng-template igxCell let-cell="cell">
         {{ renderProperties(cell) }}

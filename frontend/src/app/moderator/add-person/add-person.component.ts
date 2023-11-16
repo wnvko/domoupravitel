@@ -18,7 +18,8 @@ export class AddPersonComponent {
     this.person = fb.group({
       name: ['', Validators.required],
       phone: [''],
-      email: ['']
+      email: [''],
+      hasChip: []
     });
   }
 

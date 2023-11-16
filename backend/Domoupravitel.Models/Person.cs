@@ -16,6 +16,7 @@ namespace Domoupravitel.Models
 
         public string Email { get; set; }
 
+        public bool HasChip { get; set; }
 
         public virtual ICollection<PersonDescriptor> Descriptors
         {

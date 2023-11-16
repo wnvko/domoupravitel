@@ -69,6 +69,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
 
   public renderProperties = (cell: CellType): string => {
     var person: Person = cell.row.data;
-    return person.descriptors.map(d => d.property.number).join(', ');
+    return person.descriptors?.map(d => d.property.number).join(', ') ?? '';
   }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace Domoupravitel.Models
 {
@@ -11,5 +10,7 @@ namespace Domoupravitel.Models
         public string Phone { get; set; }
 
         public string Email { get; set; }
+
+        public bool HasChip { get; set; }
     }
 }
