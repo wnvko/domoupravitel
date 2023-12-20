@@ -22,6 +22,7 @@ import { PeopleComponent } from './people/people.component';
 import { PetComponent } from './pet/pet.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { PropertyComponent } from './property/property.component';
+import { ReferencesComponent } from './references/references.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PropertyComponent } from './property/property.component';
     PropertyComponent,
     SortPipe,
     AddPersonComponent,
+    ReferencesComponent,
   ],
   imports: [
     CommonModule,

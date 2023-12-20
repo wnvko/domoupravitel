@@ -5,6 +5,7 @@ import { CarComponent } from "./car/car.component";
 import { PeopleComponent } from "./people/people.component";
 import { PetComponent } from "./pet/pet.component";
 import { PropertyComponent } from "./property/property.component";
+import { ReferencesComponent } from "./references/references.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'people', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: 'cars', component: CarComponent, canActivate: [GuardService] },
     { path: 'pets', component: PetComponent, canActivate: [GuardService] },
     { path: 'properties', component: PropertyComponent, canActivate: [GuardService] },
+    { path: 'references', component: ReferencesComponent, canActivate: [GuardService] },
 ]
 
 @NgModule({
