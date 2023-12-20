@@ -12,7 +12,8 @@ import {
   IgxInputGroupModule,
   IgxSelectModule,
   IgxSimpleComboModule,
-  IgxSwitchModule
+  IgxSwitchModule,
+  IgxTabsModule
 } from '@infragistics/igniteui-angular';
 import { SharedModule } from '../shared/shared.module';
 import { AddPersonComponent } from './add-person/add-person.component';
@@ -50,7 +51,8 @@ import { ReferencesComponent } from './references/references.component';
     IgxIconModule,
     IgxInputGroupModule,
     IgxSelectModule,
-    IgxSwitchModule
+    IgxSwitchModule,
+    IgxTabsModule
   ]
 })
 export class ModeratorModule { }
