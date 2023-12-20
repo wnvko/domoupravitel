@@ -28,7 +28,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     IgxNavbarModule,
     IgxNavigationDrawerModule,
     IgxRippleModule,
-    IgxTabsModule,
     IgxToggleModule
   ],
   providers: [
