@@ -1,62 +1,51 @@
-<div class="navbar-wrapper">
-  <igx-navbar>
-    <div igxNavbarTitle>
-      <h4 style="margin: 0 auto; color: hsla(var(--ig-surface-500))">Равногор №1</h4>
-    </div>
-    <button *ngIf="userService.isLoggedIn()" igxButton="raised" (click)="userService.logout()">Изход</button>
-    <button *ngIf="this.userService.isLoggedIn()" igxButton="flat" type="button" routerLink="/auth/user-settings">
-      <igx-avatar icon="person"></igx-avatar>
+<igx-navbar class="navbar-wrapper">
+  <igx-navbar-action *ngIf="userService.isLoggedIn()">
+    <button igxButton="icon" igxRipple (click)="toggleNavDrawer(navDrawer)">
+      <igx-icon>menu</igx-icon>
     </button>
-  </igx-navbar>
-</div>
-<div class="content-wrap">
-  <main class="main">
-    <igx-tabs *ngIf="userService.isLoggedIn()">
-      <igx-tab-item routerLinkActive #rlaAdmin="routerLinkActive" [selected]="rlaAdmin.isActive"
-        *ngIf="this.userService.isAdmin()">
-        <igx-tab-header routerLink="/auth/user-manager">
-          <span igxTabHeaderLabel>Администрация</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin()">
-        <igx-tab-header routerLink="/auth/user-settings">
-          <span igxTabHeaderLabel>Настройки на профила</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
-        <igx-tab-header routerLink="/moderator/people">
-          <span igxTabHeaderLabel>Хора</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
-        <igx-tab-header routerLink="/moderator/cars">
-          <span igxTabHeaderLabel>Коли</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
-        <igx-tab-header routerLink="/moderator/pets">
-          <span igxTabHeaderLabel>Животни</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
-        <igx-tab-header routerLink="/moderator/properties">
-          <span igxTabHeaderLabel>Имоти</span>
-        </igx-tab-header>
-      </igx-tab-item>
-      <igx-tab-item routerLinkActive #rlaStaff="routerLinkActive" [selected]="rlaStaff.isActive"
-        *ngIf="this.userService.isAdmin() || this.userService.isModerator()">
-        <igx-tab-header routerLink="/moderator/references">
-          <span igxTabHeaderLabel>Справки</span>
-        </igx-tab-header>
-      </igx-tab-item>
-    </igx-tabs>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
+  </igx-navbar-action>
+  <div igxNavbarTitle>
+    <h4 style="margin: 0 auto; color: hsla(var(--ig-surface-500))">Равногор №1</h4>
+  </div>
+  <button *ngIf="userService.isLoggedIn()" igxButton="raised" (click)="userService.logout()">Изход</button>
+  <button *ngIf="this.userService.isLoggedIn()" igxButton="flat" type="button" routerLink="/auth/user-settings">
+    <igx-avatar icon="person"></igx-avatar>
+  </button>
+</igx-navbar>
+<div class="main">
+  <igx-nav-drawer #navDrawer [isOpen]="userService.isLoggedIn()" class="nav-drawer" width="300px" [pin]="true" [pinThreshold]="0">
+    <ng-template igxDrawer>
+      <div igxDrawerItem igxRipple routerLink="/auth/user-manager" [active]="selected === 'user-manager'" (click)="selected = 'user-manager'">
+        <igx-icon class="icon">admin_panel_settings</igx-icon>
+        <span>Администрация</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/auth/user-settings" [active]="selected === 'settings'" (click)="selected = 'settings'">
+        <igx-icon class="icon">settings</igx-icon>
+        <span>Настройки на профила</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/people" [active]="selected === 'people'" (click)="selected = 'people'">
+        <igx-icon class="icon">group</igx-icon>
+        <span>Хора</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/cars" [active]="selected === 'cars'" (click)="selected = 'cars'">
+        <igx-icon class="icon">directions_car</igx-icon>
+        <span>Коли</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/pets" [active]="selected === 'pets'" (click)="selected = 'pets'">
+        <igx-icon class="icon">pets</igx-icon>
+        <span>Животни</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/properties" [active]="selected === 'properties'" (click)="selected = 'properties'">
+        <igx-icon class="icon">apartment</igx-icon>
+        <span>Имоти</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/references" [active]="selected === 'references'" (click)="selected = 'references'">
+        <igx-icon class="icon">library_books</igx-icon>
+        <span>Справки</span>
+      </div>
+    </ng-template>
+  </igx-nav-drawer>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

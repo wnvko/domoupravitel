@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import localeBG from '@angular/common/locales/bg';
 import { Component, OnInit } from '@angular/core';
-import { changei18n } from '@infragistics/igniteui-angular';
+import { changei18n, IgxNavigationDrawerComponent } from '@infragistics/igniteui-angular';
 import { IgxResourceStringsBG } from 'igniteui-angular-i18n';
 import { UserService } from './auth/user.service';
 
@@ -11,10 +11,16 @@ import { UserService } from './auth/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  public selected = 'settings';
+
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
     changei18n(IgxResourceStringsBG);
     registerLocaleData(localeBG);
+  }
+
+  public toggleNavDrawer = (navDrawer: IgxNavigationDrawerComponent): void => {
+    navDrawer?.toggle();
   }
 }
