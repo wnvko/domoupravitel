@@ -36,4 +36,24 @@
             </igx-grid>
         </igx-tab-content>
     </igx-tab-item>
+    <igx-tab-item>
+        <igx-tab-header>
+            <igx-icon igxTabHeaderIcon>groups</igx-icon>
+            <span igxTabHeaderLabel>Живущи</span>
+        </igx-tab-header>
+        <igx-tab-content>
+            <igx-grid #groupsGrid [data]="groups" [width]="'100%'" [height]="'100%'">
+                <igx-grid-toolbar>
+                    <igx-grid-toolbar-actions>
+                        <igx-grid-toolbar-exporter [exportExcel]="true" [exportCSV]="false"></igx-grid-toolbar-exporter>
+                    </igx-grid-toolbar-actions>
+                </igx-grid-toolbar>
+                <igx-column field="property" header="Обект" [sortable]="true" [resizable]="true"></igx-column>
+                <igx-column field="adults" header="Възрастни" [dataType]="'number'" [sortable]="true" [resizable]="true"></igx-column>
+                <igx-column field="kids" header="Деца" [dataType]="'number'" [sortable]="true" [resizable]="true"></igx-column>
+                <igx-column field="pets" header="Животни" [dataType]="'number'" [sortable]="true" [resizable]="true"></igx-column>
+                <igx-column field="temporary" header="Временно пребиваващи" [dataType]="'number'" [sortable]="true" [resizable]="true"></igx-column>
+            </igx-grid>
+        </igx-tab-content>
+    </igx-tab-item>
 </igx-tabs>
