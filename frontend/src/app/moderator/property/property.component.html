@@ -1,19 +1,12 @@
 <div class="container">
-    <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="100%" [rowEditable]="true"
-        [primaryKey]="'id'" (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)"
-        [sortingOptions]="sortingOptions">
+    <igx-grid #grid [data]="properties | async" width="100%" height="100%" [rowEditable]="true" [primaryKey]="'id'">
+
         <igx-grid-toolbar>
             <igx-grid-toolbar-actions>
                 <button igxButton (click)="addProperty(grid)">Добави имот</button>
             </igx-grid-toolbar-actions>
         </igx-grid-toolbar>
-        <igx-column width="60px" [editable]="false">
-            <ng-template igxCell let-cell="cell">
-                <button igxButton="icon" (click)="startDeleteProperty(cell)">
-                    <igx-icon>delete</igx-icon>
-                </button>
-            </ng-template>
-        </igx-column>
+
         <igx-column field="type" header="Вид на имота" [sortable]="true">
             <ng-template igxCell let-cell="cell">
                 {{ parseType(cell.value) }}
@@ -30,122 +23,45 @@
         <igx-column field="number" header="Номер" [sortable]="true"></igx-column>
         <igx-column field="share" header="Дял в %" dataType="number" [sortable]="true"></igx-column>
 
-        <igx-row-island #personRowIsland [key]="'people'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar #personToolbar [grid]="personRowIsland" *igxGridToolbar="let personRowIsland">
-                <igx-grid-toolbar-title>Хора</igx-grid-toolbar-title>
-                <igx-grid-toolbar-actions>
-                    <button igxButton (click)="addPersonDescriptor(personToolbar)">Добави човек</button>
-                </igx-grid-toolbar-actions>
-            </igx-grid-toolbar>
-            <igx-column width="60px" [editable]="false" [resizable]="true">
-                <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="startDeletePerson(cell)">
-                        <igx-icon>delete</igx-icon>
-                    </button>
-                </ng-template>
-            </igx-column>
-            <igx-column field="person" header="Име" [sortable]="true" width="280px" [resizable]="true">
-                <ng-template igxCell let-cell="cell">
-                    {{ cell.value?.name ?? '' }}
-                </ng-template>
-                <ng-template igxCellEditor let-cell="cell">
-                    <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue?.id"
-                        (selectionChanging)="personSelected($event, cell)" valueKey="id" displayKey="name">
-                        <igx-prefix>
-                            <button igxButton="icon" (click)="addNewPerson()" title="Добави човек">
-                                <igx-icon>person_add</igx-icon>
-                            </button>
-                        </igx-prefix>
-                    </igx-simple-combo>
-                </ng-template>
-            </igx-column>
-            <igx-column field="type" header="Вид" [sortable]="true" [resizable]="true">
-                <ng-template igxCell let-cell="cell">
-                    {{ parsePersonType(cell.value) }}
-                </ng-template>
-                <ng-template igxCellEditor let-cell="cell">
-                    <igx-select type="border" [(ngModel)]="cell.editValue"
-                        style="height: max-content; min-width: min-content;">
-                        <igx-select-item [value]="personType.value" *ngFor="let personType of personTypes">
-                            {{personType.name}}
-                        </igx-select-item>
-                    </igx-select>
-                </ng-template>
-            </igx-column>
-            <igx-column field="residence" header="Присъствие" [sortable]="true" [resizable]="true">
-                <ng-template igxCell let-cell="cell">
-                    {{ parseResidence(cell.value) }}
-                </ng-template>
-                <ng-template igxCellEditor let-cell="cell">
-                    <igx-select type="border" [(ngModel)]="cell.editValue"
-                        style="height: max-content; min-width: min-content;">
-                        <igx-select-item [value]="residence.value" *ngFor="let residence of residencies">
-                            {{residence.name}}
-                        </igx-select-item>
-                    </igx-select>
-                </ng-template>
-            </igx-column>
-            <igx-column field="monthsInHouse" header="Месеци/Година в имота" [sortable]="true"
-                dataType="number" [resizable]="true"></igx-column>
-            <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
-            <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
-        </igx-row-island>
-
-        <igx-row-island #carRowIsland [key]="'cars'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar #carToolbar [grid]="carRowIsland" *igxGridToolbar="let carRowIsland">
-                <igx-grid-toolbar-title>Автомобили</igx-grid-toolbar-title>
-                <igx-grid-toolbar-actions>
-                    <button igxButton (click)="addCar(carToolbar)">Добави кола</button>
-                </igx-grid-toolbar-actions>
-            </igx-grid-toolbar>
-            <igx-column width="60px" [editable]="false">
-                <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="startDeleteCar(cell)">
-                        <igx-icon>delete</igx-icon>
-                    </button>
-                </ng-template>
-            </igx-column>
-            <igx-column field="number" header="Регистрационен №" [sortable]="true">
-                <ng-template igxCellEditor let-cell="cell">
-                    <igx-select type="border" [(ngModel)]="cell.editValue"
-                        style="height: max-content; min-width: min-content;">
-                        <igx-select-item [value]="car.number" *ngFor="let car of cars | async | sort:'number'">
-                            {{car.number}} - {{car.brand}} - {{car.color}}
-                        </igx-select-item>
-                    </igx-select>
-                </ng-template>
-            </igx-column>
-            <igx-column field="brand" header="Марка" [sortable]="true" [editable]="false"></igx-column>
-            <igx-column field="color" header="Цвят" [sortable]="true" [editable]="false"></igx-column>
-        </igx-row-island>
-
-        <igx-row-island #petRowIsland [key]="'pets'" [primaryKey]="'id'" [rowEditable]="true">
-            <igx-grid-toolbar #petToolbar [grid]="petRowIsland" *igxGridToolbar="let petRowIsland">
-                <igx-grid-toolbar-title>Животни</igx-grid-toolbar-title>
-                <igx-grid-toolbar-actions>
-                    <button igxButton (click)="addPet(petToolbar)">Добави животно</button>
-                </igx-grid-toolbar-actions>
-            </igx-grid-toolbar>
-            <igx-column width="60px" [editable]="false">
-                <ng-template igxCell let-cell="cell">
-                    <button igxButton="icon" (click)="startDeletePet(cell)">
-                        <igx-icon>delete</igx-icon>
-                    </button>
-                </ng-template>
-            </igx-column>
-            <igx-column field="number" header="Номер" [sortable]="true">
-                <ng-template igxCellEditor let-cell="cell">
-                    <igx-select type="border" [(ngModel)]="cell.editValue"
-                        style="height: max-content; min-width: min-content;">
-                        <igx-select-item [value]="pet.number" *ngFor="let pet of pets | async | sort:'number'">
-                            {{pet.number}} - {{pet.name}}
-                        </igx-select-item>
-                    </igx-select>
-                </ng-template>
-            </igx-column>
-            <igx-column field="name" header="Име" [sortable]="true" [editable]="false"></igx-column>
-        </igx-row-island>
-    </igx-hierarchical-grid>
+        <ng-template igxGridDetail let-dataIem>
+            <div class="detail-container">
+                <igx-tabs style="height: 100%;">
+                    <igx-tab-item>
+                        <igx-tab-header>
+                            <span igxTabHeaderLabel>Хора</span>
+                        </igx-tab-header>
+                        <igx-tab-content>
+                            <div class="tab-content">
+                                <igx-grid #people [data]="dataIem.people" [primaryKey]="'id'" [rowEditable]="true" width="100%" height="100%">
+                                    <igx-column width="60px" [editable]="false">
+                                        <ng-template igxCell let-cell="cell">
+                                            <button igxButton="icon" (click)="startDeletePerson(cell)">
+                                                <igx-icon>delete</igx-icon>
+                                            </button>
+                                        </ng-template>
+                                    </igx-column>
+                                </igx-grid>
+                            </div>
+                        </igx-tab-content>
+                    </igx-tab-item>
+                    <igx-tab-item>
+                        <igx-tab-header>
+                            <span igxTabHeaderLabel>Автомобили</span>
+                        </igx-tab-header>
+                        <igx-tab-content>
+                        </igx-tab-content>
+                    </igx-tab-item>
+                    <igx-tab-item>
+                        <igx-tab-header>
+                            <span igxTabHeaderLabel>Животни</span>
+                        </igx-tab-header>
+                        <igx-tab-content>
+                        </igx-tab-content>
+                    </igx-tab-item>
+                </igx-tabs>
+            </div>
+        </ng-template>
+    </igx-grid>
 </div>
 <igx-dialog #deleteDialog><app-delete #delete></app-delete></igx-dialog>
 <igx-dialog #addPersonDialog><app-add-person #addPerson></app-add-person></igx-dialog>

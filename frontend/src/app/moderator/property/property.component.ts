@@ -9,7 +9,9 @@ import {
   IgxHierarchicalGridComponent,
   IgxRowIslandComponent,
   ISimpleComboSelectionChangingEventArgs,
-  IgxSimpleComboComponent
+  IgxSimpleComboComponent,
+  ISelectionEventArgs,
+  IgxGridComponent
 } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
@@ -123,7 +125,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
   //#endregion  System overloads
 
   //#region CRUD
-  public addProperty = (grid: IgxHierarchicalGridComponent): void => {
+  public addProperty = (grid: IgxGridComponent): void => {
     grid.beginAddRowByIndex(0);
   }
 
@@ -193,6 +195,10 @@ export class PropertyComponent implements OnInit, OnDestroy {
     const combo = e.owner as IgxSimpleComboComponent;
     const person = combo.data?.find(p => p.id === e.newSelection) as Person;
     cell.editValue = person;
+  }
+
+  public a = (e: ISelectionEventArgs): void => {
+    console.log(e);
   }
 
   public addCar = (e: IgxGridToolbarComponent): void => {
