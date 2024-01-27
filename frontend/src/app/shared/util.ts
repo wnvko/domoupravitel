@@ -2,5 +2,9 @@
         if (!date) {
             return date;
         }
-        return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        const parsed = new Date(date);
+        if (isNaN(parsed.getTime())) {
+            return date;    
+        }
+        return new Date(parsed.getTime() - parsed.getTimezoneOffset() * 60000);
     }
