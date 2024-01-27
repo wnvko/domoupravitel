@@ -184,14 +184,14 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
   public personDeleted = (e: CellType): void => {
     this.personDescriptorService.delete(e.row.data as PersonDescriptor).pipe(first()).subscribe({
-      next: c => e.grid.deleteRow(c),
-      error: err => console.log(err)
+      next: (c: any) => e.grid.deleteRow(c),
+      error: (err: any) => console.log(err)
     });
   }
 
   public personSelected = (e: ISimpleComboSelectionChangingEventArgs, cell: CellType): void => {
     const combo = e.owner as IgxSimpleComboComponent;
-    const person = combo.data?.find(p => p.id === e.newSelection) as Person;
+    const person = combo.data?.find((p: Person) => p.id === e.newValue) as Person;
     cell.editValue = person;
   }
 
@@ -222,8 +222,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
   public carDeleted = (e: CellType): void => {
     this.propertiesService.deleteCar(e.row.data as Car).pipe(first()).subscribe({
-      next: c => e.grid.deleteRow(c.id),
-      error: err => console.log(err)
+      next: (c: any) => e.grid.deleteRow(c.id),
+      error: (err: any) => console.log(err)
     });
   }
 
@@ -254,8 +254,8 @@ export class PropertyComponent implements OnInit, OnDestroy {
 
   public petDeleted = (e: CellType): void => {
     this.propertiesService.deletePet(e.row.data as Pet).pipe(first()).subscribe({
-      next: c => e.grid.deleteRow(c.id),
-      error: err => console.log(err)
+      next: (c: any) => e.grid.deleteRow(c.id),
+      error: (err: any) => console.log(err)
     });
   }
   //#endregion
