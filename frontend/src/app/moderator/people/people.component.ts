@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CellType, GridType, IGridEditDoneEventArgs, IGridSortingStrategy, IRowDataEventArgs, ISortingExpression, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxSorting } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
+import { Chip } from 'src/app/models/chip';
 import { Person } from 'src/app/models/person';
 import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
@@ -68,8 +69,15 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   public renderProperties = (cell: CellType): string => {
-    var descriptors: PersonDescriptor[] = cell.value;
+    const descriptors: PersonDescriptor[] = cell.value;
     return descriptors?.map(d => d.property.number).join(', ') ?? '';
+  }
+
+  public renderChips = (cell: CellType): string => {
+    const chips: Chip[] = cell.value;
+    const active = chips.filter(c => c.disabled === false).length;
+    const inactive = chips.filter(c => c.disabled === true).length;
+    return `${active} / ${inactive}`;
   }
 }
 
