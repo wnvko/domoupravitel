@@ -26,6 +26,8 @@ namespace Domoupravitel.Data.UnitOfWork
 
         public IGenericRepository<PersonDescriptor> Descriptors => this.GetRepository<PersonDescriptor>();
 
+        public IGenericRepository<Chip> Chips => this.GetRepository<Chip>();
+
         public void SaveChanges()
         {
             this._context.SaveChanges();
