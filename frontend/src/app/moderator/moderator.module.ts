@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   IgxActionStripModule,
   IgxButtonModule,
+  IgxCheckboxModule,
   IgxDatePickerModule,
   IgxDialogModule,
   IgxGridModule,
@@ -24,11 +25,13 @@ import { PetComponent } from './pet/pet.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { PropertyComponent } from './property/property.component';
 import { ReferencesComponent } from './references/references.component';
+import { ChipsComponent } from './chips/chips.component';
 
 @NgModule({
   declarations: [
     PeopleComponent,
     CarComponent,
+    ChipsComponent,
     PetComponent,
     PropertyComponent,
     SortPipe,
@@ -43,6 +46,7 @@ import { ReferencesComponent } from './references/references.component';
     SharedModule,
     IgxActionStripModule,
     IgxButtonModule,
+    IgxCheckboxModule,
     IgxSimpleComboModule,
     IgxDatePickerModule,
     IgxDialogModule,

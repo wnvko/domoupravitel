@@ -1,3 +1,4 @@
+import { Chip } from "./chip";
 import { PersonDescriptor } from "./person-descriptor";
 
 export interface Person {
@@ -8,4 +9,5 @@ export interface Person {
     descriptors: PersonDescriptor[];
     birthDate: Date;
     hasChip: boolean;
+    chips: Chip[];
 }

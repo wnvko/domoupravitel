@@ -25,6 +25,7 @@ namespace Domoupravitel.Web.Controllers
             var result = this._data.People
                 .All()
                 .Include(p => p.Descriptors.Select(d => d.Property))
+                .Include(p => p.Chips)
                 .ToList();
             var t = this._data.Properties
                 .All()
@@ -33,6 +34,9 @@ namespace Domoupravitel.Web.Controllers
                 .All()
                 .Include(d => d.Person)
                 .Include(d => d.Property)
+                .ToList();
+            var c = this._data.Chips
+                .All()
                 .ToList();
             return result;
         }
@@ -52,7 +56,6 @@ namespace Domoupravitel.Web.Controllers
                 Name = request.Name,
                 Email = request.Email ?? string.Empty,
                 Phone = request.Phone ?? string.Empty,
-                HasChip = request.HasChip,
                 BirthDate = request.BirthDate?.Date,
             };
             this._data.People.Add(person);
@@ -75,7 +78,6 @@ namespace Domoupravitel.Web.Controllers
 
             person.Phone = request.Phone;
             person.Email = request.Email;
-            person.HasChip = request.HasChip;
             person.BirthDate = request.BirthDate?.Date;
 
             this._data.People.Update(person);

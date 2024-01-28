@@ -20,9 +20,7 @@ export class CarComponent implements OnInit, OnDestroy {
   private dialog!: IgxDialogComponent;
 
   public cars!: Observable<Car[]>;
-  public sortingOptions: ISortingOptions = {
-    mode: 'single'
-  }
+  public sortingOptions: ISortingOptions = { mode: 'single' };
 
   constructor(
     private carsService: CarService

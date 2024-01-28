@@ -44,6 +44,8 @@ namespace Domoupravitel.Data
 
         public DbSet<PersonDescriptor> Descriptors { get; set; }
 
+        public DbSet<Chip> Chips { get; set; }
+
         public new DbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

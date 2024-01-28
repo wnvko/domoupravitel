@@ -16,38 +16,41 @@
   <igx-nav-drawer #navDrawer [isOpen]="userService.isLoggedIn()" class="nav-drawer" width="300px" [pin]="true"
     [pinThreshold]="0">
     <ng-template igxDrawer>
-      <div igxDrawerItem igxRipple routerLink="/auth/user-manager" [active]="selected === 'user-manager'"
-        (click)="selected = 'user-manager'" *ngIf="userService.isAdmin()">
+      <div igxDrawerItem igxRipple routerLink="/auth/user-manager" [active]="selected.includes('user-manager')"
+        *ngIf="userService.isAdmin()">
         <igx-icon class="icon">admin_panel_settings</igx-icon>
         <span>Администрация</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/auth/user-settings" [active]="selected === 'settings'"
-        (click)="selected = 'settings'">
+      <div igxDrawerItem igxRipple routerLink="/auth/user-settings" [active]="selected.includes('user-settings')">
         <igx-icon class="icon">settings</igx-icon>
         <span>Настройки на профила</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/moderator/people" [active]="selected === 'people'"
-        (click)="selected = 'people'" *ngIf="userService.isModerator() || userService.isAdmin()">
+      <div igxDrawerItem igxRipple routerLink="/moderator/people" [active]="selected.includes('people')"
+        *ngIf="userService.isModerator() || userService.isAdmin()">
         <igx-icon class="icon">group</igx-icon>
         <span>Хора</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/moderator/cars" [active]="selected === 'cars'"
-        (click)="selected = 'cars'" *ngIf="userService.isModerator() || userService.isAdmin()">
+      <div igxDrawerItem igxRipple routerLink="/moderator/chips" [active]="selected.includes('chips')"
+        *ngIf="userService.isModerator() || userService.isAdmin()">
+        <igx-icon class="icon">sell</igx-icon>
+        <span>Чипове</span>
+      </div>
+      <div igxDrawerItem igxRipple routerLink="/moderator/cars" [active]="selected.includes('cars')"
+        *ngIf="userService.isModerator() || userService.isAdmin()">
         <igx-icon class="icon">directions_car</igx-icon>
         <span>Коли</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/moderator/pets" [active]="selected === 'pets'"
-        (click)="selected = 'pets'" *ngIf="userService.isModerator() || userService.isAdmin()">
+      <div igxDrawerItem igxRipple routerLink="/moderator/pets" [active]="selected.includes('pets')"
+        *ngIf="userService.isModerator() || userService.isAdmin()">
         <igx-icon class="icon">pets</igx-icon>
         <span>Животни</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/moderator/properties" [active]="selected === 'properties'"
-        (click)="selected = 'properties'" *ngIf="userService.isModerator() || userService.isAdmin()">
+      <div igxDrawerItem igxRipple routerLink="/moderator/properties" [active]="selected.includes('properties')"
+        *ngIf="userService.isModerator() || userService.isAdmin()">
         <igx-icon class="icon">apartment</igx-icon>
         <span>Имоти</span>
       </div>
-      <div igxDrawerItem igxRipple routerLink="/moderator/references" [active]="selected === 'references'"
-        (click)="selected = 'references'">
+      <div igxDrawerItem igxRipple routerLink="/moderator/references" [active]="selected.includes('references')">
         <igx-icon class="icon">library_books</igx-icon>
         <span>Справки</span>
       </div>

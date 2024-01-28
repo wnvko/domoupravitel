@@ -1,0 +1,29 @@
+<div class="container">
+  <igx-grid #grid [data]="chips | async" width="100%" height="100%" [rowEditable]="true" [primaryKey]="'id'"
+    (rowAdded)="chipAdded($event)" (rowEditDone)="chipEdited($event)" [sortingOptions]="sortingOptions">
+    <igx-grid-toolbar>
+      <igx-grid-toolbar-actions>
+        <button igxButton (click)="addChip(grid)">Добави чип</button>
+      </igx-grid-toolbar-actions>
+    </igx-grid-toolbar>
+    <igx-column field="person" header="Име" [sortable]="true" width="280px" [resizable]="true">
+      <ng-template igxCell let-cell="cell">
+        {{ cell.value?.name ?? '' }}
+      </ng-template>
+      <ng-template igxCellEditor let-cell="cell">
+        <igx-simple-combo [data]="people | async | sort:'name'" [ngModel]="cell.editValue?.id"
+          (selectionChanging)="personSelected($event, cell)" valueKey="id" displayKey="name">
+          <igx-prefix>
+            <button igxButton="icon" (click)="addNewPerson()" title="Добави човек">
+              <igx-icon>person_add</igx-icon>
+            </button>
+          </igx-prefix>
+        </igx-simple-combo>
+      </ng-template>
+    </igx-column>
+    <igx-column field="number" header="№ на чипа" [sortable]="true"></igx-column>
+    <igx-column field="disabled" dataType="boolean" header="Изключен" [sortable]="true"></igx-column>
+  </igx-grid>
+</div>
+<igx-dialog #dialog><app-delete #deleteDialog></app-delete></igx-dialog>
+<igx-dialog #addPersonDialog><app-add-person #addPerson></app-add-person></igx-dialog>

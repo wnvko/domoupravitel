@@ -17,6 +17,8 @@ namespace Domoupravitel.Data.UnitOfWork
 
         IGenericRepository<PersonDescriptor> Descriptors { get; }
 
+        IGenericRepository<Chip> Chips { get; }
+
         void SaveChanges();
     }
 }
