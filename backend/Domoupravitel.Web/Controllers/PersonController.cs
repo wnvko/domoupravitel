@@ -25,6 +25,7 @@ namespace Domoupravitel.Web.Controllers
             var result = this._data.People
                 .All()
                 .Include(p => p.Descriptors.Select(d => d.Property))
+                .Include(p => p.Chips)
                 .ToList();
             var t = this._data.Properties
                 .All()
@@ -33,6 +34,9 @@ namespace Domoupravitel.Web.Controllers
                 .All()
                 .Include(d => d.Person)
                 .Include(d => d.Property)
+                .ToList();
+            var c = this._data.Chips
+                .All()
                 .ToList();
             return result;
         }

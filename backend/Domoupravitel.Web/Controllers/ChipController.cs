@@ -1,4 +1,5 @@
-﻿using Domoupravitel.Data.UnitOfWork;
+﻿using System.Data.Entity;
+using Domoupravitel.Data.UnitOfWork;
 using Domoupravitel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,13 @@ namespace Domoupravitel.Web.Controllers
         [Route("all")]
         public IEnumerable<Chip> All()
         {
-            var result = this._data.Chips.All();
+            var result = this._data.Chips
+                .All()
+                .Include(c => c.Person)
+                .ToList();
+            var p = this._data.People
+                .All()
+                .ToList();
             return result;
         }
 
@@ -33,6 +40,9 @@ namespace Domoupravitel.Web.Controllers
 
             var existing = this._data.Chips.SearchFor(c => c.Id == request.Id).FirstOrDefault();
             if (existing != null) return BadRequest("Chip already exists");
+
+            var person = this._data.People.SearchFor(p => p.Id == request.PersonId).FirstOrDefault();
+            if (person == null) return BadRequest("Person not found");
 
             var chip = new Chip
             {
@@ -57,14 +67,14 @@ namespace Domoupravitel.Web.Controllers
             if (chip == null) return BadRequest("Chip not found");
 
             if (string.IsNullOrEmpty(request.Number)) return BadRequest("Chip number not provided");
-            if (request.PersonId == Guid.Empty) return BadRequest("Chip person not provided");
+            if (request.Person.Id == Guid.Empty) return BadRequest("Chip person not provided");
 
             if (this._data.Chips.All().Any(c => c.Number == request.Number && c != chip))
                 return BadRequest("Chip with this number already exists");
 
             chip.Number = request.Number;
             chip.Disabled = request.Disabled;
-            chip.PersonId = request.PersonId;
+            chip.PersonId = request.Person.Id;
 
             this._data.Chips.Update(chip);
             this._data.SaveChanges();
