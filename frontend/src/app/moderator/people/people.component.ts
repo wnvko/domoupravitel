@@ -97,20 +97,32 @@ class DescriptorSortingStrategy implements IGridSortingStrategy {
         case 0:
           return data;
         case 1:
-          return data.sort((a: Person, b: Person) => {
-            if (a.descriptors[0]?.property?.number < b.descriptors[0]?.property?.number ) return -1;
-            if (a.descriptors[0]?.property?.number > b.descriptors[0]?.property?.number ) return 1;
-            return 0;
-          });
+          return data.sort((a: Person, b: Person) => this.comparePerson(a, b));
         case 2:
-          return data.sort((a: Person, b: Person) => {
-            if (a.descriptors[0]?.property?.number > b.descriptors[0]?.property?.number ) return -1;
-            if (a.descriptors[0]?.property?.number < b.descriptors[0]?.property?.number ) return 1;
-            return 0;
-          });
+          return data.sort((a: Person, b: Person) => this.comparePerson(a, b) * (-1));
       }
     }
     const defaultSorting = new IgxSorting();
     return defaultSorting.sort(data, expressions, grid);
+  }
+
+  comparePerson = (first: Person, second: Person): number => {
+    const firstDescriptors = first.descriptors.sort((a: PersonDescriptor, b: PersonDescriptor) => a.property.type - b.property.type);
+    const secondDescriptors = second.descriptors.sort((a: PersonDescriptor, b: PersonDescriptor) => a.property.type - b.property.type);
+    const firstDescriptor = firstDescriptors[0];
+    const secondDescriptor = secondDescriptors[0];
+    if (!firstDescriptor && !secondDescriptor) return 0;
+    if (!firstDescriptor) return 1;
+    if (!secondDescriptor) return -1;
+
+    const firstProperty = firstDescriptor.property;
+    const secondProperty = secondDescriptor.property;
+    if (!firstProperty && !secondProperty) return 0;
+    if (!firstProperty) return 1;
+    if (!secondProperty) return -1;
+
+    if (firstProperty.number < secondProperty.number) return -1;
+    if (firstProperty.number > secondProperty.number) return 1;
+    return 0;
   }
 }
