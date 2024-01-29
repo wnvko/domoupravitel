@@ -19,6 +19,8 @@ namespace Domoupravitel.Data.UnitOfWork
 
         IGenericRepository<Chip> Chips { get; }
 
+        IGenericRepository<GridState> GridStates { get; }
+
         void SaveChanges();
     }
 }

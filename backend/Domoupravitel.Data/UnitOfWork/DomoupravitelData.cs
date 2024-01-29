@@ -28,6 +28,8 @@ namespace Domoupravitel.Data.UnitOfWork
 
         public IGenericRepository<Chip> Chips => this.GetRepository<Chip>();
 
+        public IGenericRepository<GridState> GridStates => this.GetRepository<GridState>();
+
         public void SaveChanges()
         {
             this._context.SaveChanges();
