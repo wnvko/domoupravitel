@@ -1,7 +1,6 @@
 <div class="container">
-    <igx-hierarchical-grid #grid [data]="properties | async" width="100%" height="100%" [rowEditable]="true"
-        [primaryKey]="'id'" (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)"
-        [sortingOptions]="sortingOptions">
+    <igx-hierarchical-grid #grid [data]="properties | async" [rowEditable]="true" [primaryKey]="'id'"
+        (rowAdded)="propertyAdded($event)" (rowEditDone)="propertyEdited($event)" [sortingOptions]="sortingOptions">
         <igx-grid-toolbar>
             <igx-grid-toolbar-actions>
                 <button igxButton (click)="addProperty(grid)">Добави имот</button>
@@ -85,10 +84,12 @@
                     </igx-select>
                 </ng-template>
             </igx-column>
-            <igx-column field="monthsInHouse" header="Месеци/Година в имота" [sortable]="true"
-                dataType="number" [resizable]="true"></igx-column>
-            <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
-            <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date" [resizable]="true"></igx-column>
+            <igx-column field="monthsInHouse" header="Месеци/Година в имота" [sortable]="true" dataType="number"
+                [resizable]="true"></igx-column>
+            <igx-column field="registeredOn" header="Регистриран на" [sortable]="true" dataType="date"
+                [resizable]="true"></igx-column>
+            <igx-column field="unRegisteredOn" header="Отписан на" [sortable]="true" dataType="date"
+                [resizable]="true"></igx-column>
         </igx-row-island>
 
         <igx-row-island #carRowIsland [key]="'cars'" [primaryKey]="'id'" [rowEditable]="true">

@@ -5,7 +5,7 @@
             <span igxTabHeaderLabel>Контакти</span>
         </igx-tab-header>
         <igx-tab-content>
-            <igx-grid #peopleGrid [data]="people" [width]="'100%'" [height]="'100%'">
+            <igx-grid #peopleGrid [data]="people">
                 <igx-grid-toolbar>
                     <igx-grid-toolbar-actions>
                         <igx-grid-toolbar-exporter [exportExcel]="true" [exportCSV]="false"></igx-grid-toolbar-exporter>
@@ -25,7 +25,7 @@
             <span igxTabHeaderLabel>Коли</span>
         </igx-tab-header>
         <igx-tab-content>
-            <igx-grid #carsGrid [data]="cars" [width]="'100%'" [height]="'100%'">
+            <igx-grid #carsGrid [data]="cars">
                 <igx-grid-toolbar>
                     <igx-grid-toolbar-actions>
                         <igx-grid-toolbar-exporter [exportExcel]="true" [exportCSV]="false"></igx-grid-toolbar-exporter>
@@ -42,7 +42,7 @@
             <span igxTabHeaderLabel>Живущи</span>
         </igx-tab-header>
         <igx-tab-content>
-            <igx-grid #groupsGrid [data]="groups" [width]="'100%'" [height]="'100%'">
+            <igx-grid #groupsGrid [data]="groups">
                 <igx-grid-toolbar>
                     <igx-grid-toolbar-actions>
                         <igx-grid-toolbar-exporter [exportExcel]="true" [exportCSV]="false"></igx-grid-toolbar-exporter>

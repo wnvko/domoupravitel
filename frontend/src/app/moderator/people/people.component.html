@@ -1,7 +1,6 @@
 <div class="container">
-  <igx-grid #grid [data]="people | async" width="100%" height="100%" [rowEditable]="true" [primaryKey]="'id'"
-    (rowAdded)="personAdded($event)" (rowEditDone)="personEdited($event)" [sortingOptions]="sortingOptions"
-    [sortStrategy]="sortStrategy">
+  <igx-grid #grid [data]="people | async" [rowEditable]="true" [primaryKey]="'id'" (rowAdded)="personAdded($event)"
+    (rowEditDone)="personEdited($event)" [sortingOptions]="sortingOptions" [sortStrategy]="sortStrategy">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
         <button igxButton (click)="addPerson(grid)">Добави човек</button>
@@ -19,7 +18,8 @@
     <igx-column field="email" header="e-mail" [sortable]="true" [resizable]="true"></igx-column>
     <igx-column field="birthDate" header="Роден на" [sortable]="true" [dataType]="'date'"
       [resizable]="true"></igx-column>
-    <igx-column field="chips" [dataType]="'boolean'" [width]="'120px'" [editable]="false" [headerTemplate]="chipsHeader">
+    <igx-column field="chips" [dataType]="'boolean'" [width]="'120px'" [editable]="false"
+      [headerTemplate]="chipsHeader">
       <ng-template igxCell let-cell="cell">
         {{ renderChips(cell) }}
       </ng-template>

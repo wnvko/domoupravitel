@@ -1,6 +1,6 @@
 <div class="container">
-  <igx-grid #grid [data]="users | async" width="100%" height="100%" [rowEditable]="true" [primaryKey]="'id'"
-    (rowAdded)="userAdded($event)" (rowEditDone)="userEdited($event)">
+  <igx-grid #grid [data]="users | async" [rowEditable]="true" [primaryKey]="'id'" (rowAdded)="userAdded($event)"
+    (rowEditDone)="userEdited($event)">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
         <button igxButton (click)="addUser(grid)">Добави потребител</button>

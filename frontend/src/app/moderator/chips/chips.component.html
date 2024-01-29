@@ -1,6 +1,6 @@
 <div class="container">
-  <igx-grid #grid [data]="chips | async" width="100%" height="100%" [rowEditable]="true" [primaryKey]="'id'"
-    (rowAdded)="chipAdded($event)" (rowEditDone)="chipEdited($event)" [sortingOptions]="sortingOptions">
+  <igx-grid #grid [data]="chips | async" [rowEditable]="true" [primaryKey]="'id'" (rowAdded)="chipAdded($event)"
+    (rowEditDone)="chipEdited($event)" [sortingOptions]="sortingOptions" [sortStrategy]="sortStrategy">
     <igx-grid-toolbar>
       <igx-grid-toolbar-actions>
         <button igxButton (click)="addChip(grid)">Добави чип</button>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISimpleComboSelectionChangingEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxSimpleComboComponent } from '@infragistics/igniteui-angular';
+import { CellType, GridType, IGridEditDoneEventArgs, IGridSortingStrategy, IRowDataEventArgs, ISimpleComboSelectionChangingEventArgs, ISortingExpression, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxSimpleComboComponent, IgxSorting } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Chip } from 'src/app/models/chip';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
@@ -31,6 +31,7 @@ export class ChipsComponent  implements OnInit, OnDestroy {
   public chips!: Observable<Chip[]>;
   public people!: Observable<Person[]>;
   public sortingOptions: ISortingOptions = { mode: 'single' };
+  public sortStrategy: IGridSortingStrategy = ChipSortingStrategy.instance();
 
   constructor(
     private chipService: ChipsService,
@@ -93,5 +94,39 @@ export class ChipsComponent  implements OnInit, OnDestroy {
   
   public addNewPerson = (): void => {
     this.addPersonDialog.open();
+  }
+}
+
+class ChipSortingStrategy implements IGridSortingStrategy {
+  private static _instance: ChipSortingStrategy;
+
+  private constructor() { }
+
+  public static instance(): IGridSortingStrategy {
+      return this._instance || (this._instance = new ChipSortingStrategy());
+  }
+
+  sort(data: any[], expressions: ISortingExpression<any>[], grid?: GridType | undefined): any[] {
+    if (expressions.length === 1 && expressions[0].fieldName === 'person') {
+      const direction = expressions[0].dir;
+      switch (direction) {
+        case 0:
+          return data;
+        case 1:
+          return data.sort((a: Chip, b: Chip) => {
+            if (a.person.name < b.person.name ) return -1;
+            if (a.person.name > b.person.name ) return 1;
+            return 0;
+          });
+        case 2:
+          return data.sort((a: Chip, b: Chip) => {
+            if (a.person.name > b.person.name ) return -1;
+            if (a.person.name < b.person.name ) return 1;
+            return 0;
+          });
+      }
+    }
+    const defaultSorting = new IgxSorting();
+    return defaultSorting.sort(data, expressions, grid);
   }
 }
