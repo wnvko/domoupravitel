@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, IGridEditDoneEventArgs, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+import { CellType, IGridEditDoneEventArgs, IGridState, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxGridStateDirective } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { CarService } from '../car.service';
+import { GridStateService } from '../grid-state.service';
+import { NavigationStart, Router } from '@angular/router';
+import { GridState } from 'src/app/models/grid-state';
+import { restoreState } from 'src/app/shared/util';
 
 @Component({
   selector: 'app-car',
@@ -12,6 +16,10 @@ import { CarService } from '../car.service';
 })
 export class CarComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
+  private gridName: string = 'Cars.Grid';
+
+  @ViewChild('grid',  { static: true, read: IgxGridComponent})
+  private grid!: IgxGridComponent;
 
   @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
   private deleteDialog!: DeleteComponent;
@@ -19,16 +27,39 @@ export class CarComponent implements OnInit, OnDestroy {
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;
 
+  @ViewChild(IgxGridStateDirective, { static: true })
+  private state!: IgxGridStateDirective;
+
   public cars!: Observable<Car[]>;
   public sortingOptions: ISortingOptions = { mode: 'single' };
 
   constructor(
-    private carsService: CarService
-  ) { }
+    private carsService: CarService,
+    private gridStateService: GridStateService,
+    router: Router,
+  ) {
+    router.events.pipe(takeUntil(this.destroy$)).subscribe(e => {
+      if (e instanceof NavigationStart) {
+        const newGridState: GridState = {
+          id: crypto.randomUUID(),
+          gridName: this.gridName,
+          options: this.state.getState().toString()
+        }
+        this.gridStateService.putState(newGridState).subscribe()
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.cars = this.carsService.all();
     this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(() => this.dialog.close());
+    this.gridStateService.getState(this.gridName).pipe(takeUntil(this.destroy$)).subscribe({
+      next: state => {
+        const gridState: IGridState = JSON.parse(state.options);
+        restoreState(gridState, this.grid);
+      },
+      error: err => console.log(err),
+    });
   }
   
   ngOnDestroy(): void {
