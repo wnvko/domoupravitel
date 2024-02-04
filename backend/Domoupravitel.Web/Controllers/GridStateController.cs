@@ -20,7 +20,7 @@ namespace Domoupravitel.Web.Controllers
 
         [HttpGet]
         [Route("get/{name}")]
-        public IActionResult All(string name)
+        public IActionResult StateByName(string name)
         {
             if (string.IsNullOrEmpty(name)) return BadRequest("Name not provided for grid state");
 
@@ -30,7 +30,7 @@ namespace Domoupravitel.Web.Controllers
             return Ok(gridState);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("put")]
         public IActionResult Create(GridState gridState)
         {
