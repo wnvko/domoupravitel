@@ -17,6 +17,8 @@ namespace Domoupravitel.Data
 
         DbSet<PersonDescriptor> Descriptors { get; set; }
 
+        DbSet<GridState> GridStates { get; set; }
+
         DbSet<T> Set<T>() where T : class;
 
         void SaveChanges();

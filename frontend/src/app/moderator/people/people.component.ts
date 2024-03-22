@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CellType, GridType, IGridEditDoneEventArgs, IGridSortingStrategy, IRowDataEventArgs, ISortingExpression, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxSorting } from '@infragistics/igniteui-angular';
+import { CellType, GridType, IGridEditDoneEventArgs, IGridSortingStrategy, IGridState, IRowDataEventArgs, ISortingExpression, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxGridStateDirective, IgxSorting } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Chip } from 'src/app/models/chip';
 import { Person } from 'src/app/models/person';
 import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { PeopleService } from '../people.service';
+import { GridStateService } from '../grid-state.service';
+import { GridState } from 'src/app/models/grid-state';
+import { NavigationStart, Router } from '@angular/router';
+import { restoreState } from 'src/app/shared/util';
 
 @Component({
   selector: 'app-people',
@@ -14,6 +18,10 @@ import { PeopleService } from '../people.service';
 })
 export class PeopleComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
+  private gridName: string = 'People.Grid';
+
+  @ViewChild('grid',  { static: true, read: IgxGridComponent})
+  private grid!: IgxGridComponent;
 
   @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
   private deleteDialog!: DeleteComponent;
@@ -21,24 +29,47 @@ export class PeopleComponent implements OnInit, OnDestroy {
   @ViewChild('dialog', { static: true, read: IgxDialogComponent })
   private dialog!: IgxDialogComponent;
 
+  @ViewChild(IgxGridStateDirective, { static: true })
+  private state!: IgxGridStateDirective;
+
   public people!: Observable<Person[]>;
   public sortingOptions: ISortingOptions = { mode: 'single' };
   public sortStrategy: IGridSortingStrategy = DescriptorSortingStrategy.instance();
 
   constructor(
-    private peopleService: PeopleService
-  ) { }
+    private peopleService: PeopleService,
+    private gridStateService: GridStateService,
+    router: Router,
+  ) {
+    router.events.pipe(takeUntil(this.destroy$)).subscribe(e => {
+      if (e instanceof NavigationStart) {
+        const newGridState: GridState = {
+          id: crypto.randomUUID(),
+          gridName: this.gridName,
+          options: this.state.getState().toString()
+        }
+        this.gridStateService.putState(newGridState).subscribe()
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.people = this.peopleService.all();
     this.deleteDialog.result.pipe(takeUntil(this.destroy$)).subscribe(() => this.dialog.close());
+    this.gridStateService.getState(this.gridName).pipe(takeUntil(this.destroy$)).subscribe({
+      next: state => {
+        const gridState: IGridState = JSON.parse(state.options);
+        restoreState(gridState, this.grid);
+      },
+      error: err => console.log(err),
+    });
   }
-  
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
+
   public addPerson = (grid: IgxGridComponent): void => {
     grid.beginAddRowByIndex(0);
   }
@@ -54,7 +85,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.peopleService.update(e.newValue as Person).pipe(first()).subscribe();
   }
 
-  public startDeletePerson =(e: CellType): void => {
+  public startDeletePerson = (e: CellType): void => {
     this.deleteDialog.deleteFunction = { function: this.personDeleted, args: e };
     const person = e.row.data as Person;
     this.deleteDialog.message = `${person.name} ще бъде изтрит/а!`;
@@ -74,7 +105,10 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   public renderChips = (cell: CellType): string => {
-    const chips: Chip[] = cell.value;
+    if (!cell.value) 
+      return '';
+
+      const chips: Chip[] = cell.value;
     const active = chips.filter(c => c.disabled === false).length;
     const inactive = chips.filter(c => c.disabled === true).length;
     return `${active} / ${inactive}`;
@@ -87,7 +121,7 @@ class DescriptorSortingStrategy implements IGridSortingStrategy {
   private constructor() { }
 
   public static instance(): IGridSortingStrategy {
-      return this._instance || (this._instance = new DescriptorSortingStrategy());
+    return this._instance || (this._instance = new DescriptorSortingStrategy());
   }
 
   sort(data: any[], expressions: ISortingExpression<any>[], grid?: GridType | undefined): any[] {

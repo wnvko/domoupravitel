@@ -14,7 +14,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent implements OnInit {
   public selected = 'settings';
 
-  constructor(public userService: UserService, private router: Router) {
+  constructor(public userService: UserService, router: Router) {
     router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
         this.selected = e.url;
