@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { CellType, IGridEditDoneEventArgs, IGridState, IRowDataEventArgs, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxGridStateDirective } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Car } from 'src/app/models/car';
+import { GridState } from 'src/app/models/grid-state';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
+import { restoreState } from 'src/app/shared/util';
+import { v4 } from 'uuid';
 import { CarService } from '../car.service';
 import { GridStateService } from '../grid-state.service';
-import { NavigationStart, Router } from '@angular/router';
-import { GridState } from 'src/app/models/grid-state';
-import { restoreState } from 'src/app/shared/util';
 
 @Component({
   selector: 'app-car',
@@ -41,7 +42,7 @@ export class CarComponent implements OnInit, OnDestroy {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(e => {
       if (e instanceof NavigationStart) {
         const newGridState: GridState = {
-          id: crypto.randomUUID(),
+          id: v4(),
           gridName: this.gridName,
           options: this.state.getState().toString()
         }

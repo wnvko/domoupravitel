@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { CellType, GridType, IGridEditDoneEventArgs, IGridSortingStrategy, IGridState, IRowDataEventArgs, ISortingExpression, ISortingOptions, IgxDialogComponent, IgxGridComponent, IgxGridStateDirective, IgxSorting } from '@infragistics/igniteui-angular';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { Chip } from 'src/app/models/chip';
+import { GridState } from 'src/app/models/grid-state';
 import { Person } from 'src/app/models/person';
 import { PersonDescriptor } from 'src/app/models/person-descriptor';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
-import { PeopleService } from '../people.service';
-import { GridStateService } from '../grid-state.service';
-import { GridState } from 'src/app/models/grid-state';
-import { NavigationStart, Router } from '@angular/router';
 import { restoreState } from 'src/app/shared/util';
+import { v4 } from 'uuid';
+import { GridStateService } from '../grid-state.service';
+import { PeopleService } from '../people.service';
 
 @Component({
   selector: 'app-people',
@@ -20,7 +21,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   private gridName: string = 'People.Grid';
 
-  @ViewChild('grid',  { static: true, read: IgxGridComponent})
+  @ViewChild('grid', { static: true, read: IgxGridComponent })
   private grid!: IgxGridComponent;
 
   @ViewChild('deleteDialog', { static: true, read: DeleteComponent })
@@ -44,7 +45,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(e => {
       if (e instanceof NavigationStart) {
         const newGridState: GridState = {
-          id: crypto.randomUUID(),
+          id: v4(),
           gridName: this.gridName,
           options: this.state.getState().toString()
         }
@@ -105,10 +106,10 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   public renderChips = (cell: CellType): string => {
-    if (!cell.value) 
+    if (!cell.value)
       return '';
 
-      const chips: Chip[] = cell.value;
+    const chips: Chip[] = cell.value;
     const active = chips.filter(c => c.disabled === false).length;
     const inactive = chips.filter(c => c.disabled === true).length;
     return `${active} / ${inactive}`;

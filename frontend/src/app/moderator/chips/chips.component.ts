@@ -11,6 +11,7 @@ import { GridState } from 'src/app/models/grid-state';
 import { Person } from 'src/app/models/person';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { restoreState } from 'src/app/shared/util';
+import { v4 } from 'uuid';
 import { AddPersonComponent } from '../add-person/add-person.component';
 import { ChipsService } from '../chips.service';
 import { GridStateService } from '../grid-state.service';
@@ -57,7 +58,7 @@ export class ChipsComponent implements OnInit, OnDestroy {
     router.events.pipe(takeUntil(this.destroy$)).subscribe(e => {
       if (e instanceof NavigationStart) {
         const newGridState: GridState = {
-          id: crypto.randomUUID(),
+          id: v4(),
           gridName: this.gridName,
           options: this.state.getState().toString()
         }
