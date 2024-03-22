@@ -105,7 +105,10 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   public renderChips = (cell: CellType): string => {
-    const chips: Chip[] = cell.value;
+    if (!cell.value) 
+      return '';
+
+      const chips: Chip[] = cell.value;
     const active = chips.filter(c => c.disabled === false).length;
     const inactive = chips.filter(c => c.disabled === true).length;
     return `${active} / ${inactive}`;
